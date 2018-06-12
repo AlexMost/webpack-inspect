@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var html = require('./html');
 var app = express();
@@ -13,10 +14,10 @@ function start(statsData, moduleId) {
         res.json({ stats: statsData, moduleId });
     });
 
-    app.use(express.static('frontend'));
+    app.use(express.static(path.join(__dirname, './frontend')));
 
     app.listen(PORT, function () {
-        console.log(`app listening on port ${PORT}!`);
+        console.log(`app listening on  http://localhost:${PORT}`);
     });
 
     return `http://localhost:${PORT}`;
