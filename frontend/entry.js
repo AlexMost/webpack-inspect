@@ -1,4 +1,4 @@
-import { getDepIds, getModulesMap } from "./webpack-helpers.js";
+import { getModulesMap } from "./webpack-helpers.js";
 import { drawGraph } from "./view.js";
 
 // const nodes = [
