@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var html = require('./html');
@@ -5,16 +6,17 @@ var app = express();
 
 const PORT = 8889;
 
-function start(statsData, moduleId) {
+function start(statsPath) {
     app.get('/', function (req, res) {
-        res.send(html({ title: `Dependency graph for ${moduleId}`}));
+        res.send(html({ title: `Dependency graph`}));
       });
     
     app.get('/stats', (req, res) => {
-        res.json({ stats: statsData, moduleId });
+        const statsData = JSON.parse(fs.readFileSync(statsPath));
+        res.json({ stats: statsData });
     });
 
-    app.use(express.static(path.join(__dirname, './frontend')));
+    app.use(express.static(path.join(__dirname, './dist')));
 
     app.listen(PORT, function () {
         console.log(`app listening on  http://localhost:${PORT}`);

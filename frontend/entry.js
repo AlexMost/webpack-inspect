@@ -1,3 +1,6 @@
+import React from "react";
+import ReactDOM from 'react-dom';
+import MyApp from "./app";
 import { getModulesMap } from "./webpack-helpers.js";
 import { drawGraph } from "./view.js";
 
@@ -38,33 +41,36 @@ function createEdge(modFrom, modTo) {
 }
 
 async function start() {
-    const { stats: statsData, moduleId } = await loadStatsData();
+    const container = document.getElementById('container');
+    ReactDOM.render(<MyApp/>, container);
+    const { stats: statsData } = await loadStatsData();
+    console.log(statsData);
     // const depIds = getDepIds(statsData, moduleId);
-    const modulesMap = getModulesMap(statsData);
+    // const modulesMap = getModulesMap(statsData);
     
-    const nodes = [];
-    const edges = [];
-    const visited = new Set();
+    // const nodes = [];
+    // const edges = [];
+    // const visited = new Set();
 
-    function walk(node, level=0) {
-        if (! visited.has(node.id)) {
+    // function walk(node, level=0) {
+    //     if (! visited.has(node.id)) {
 
-            visited.add(node.id);
-            nodes.push(createNode(node, level, node.id === moduleId ? 'red' : 'gray'));
+    //         visited.add(node.id);
+    //         nodes.push(createNode(node, level, node.id === moduleId ? 'red' : 'gray'));
 
-            node
-            .reasons
-            .filter((r) => !visited.has(r.moduleId))
-            .forEach(reason => {
-                const reasonMod = modulesMap[reason.moduleId];
-                edges.push(createEdge(node, reasonMod));
-                walk(reasonMod, level + 1);
-            });
-        }
-    }
+    //         node
+    //         .reasons
+    //         .filter((r) => !visited.has(r.moduleId))
+    //         .forEach(reason => {
+    //             const reasonMod = modulesMap[reason.moduleId];
+    //             edges.push(createEdge(node, reasonMod));
+    //             walk(reasonMod, level + 1);
+    //         });
+    //     }
+    // }
 
-    walk(modulesMap[moduleId]);
-    drawGraph({ nodes, edges });
+    // walk(modulesMap[moduleId]);
+    // drawGraph({ nodes, edges });
 }
 
 start();
