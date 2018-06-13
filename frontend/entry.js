@@ -14,14 +14,6 @@ const edges = [
     // { target: "2", source: "1", strength: 0.1 }
 ]
 
-const STATS_URL = '/stats';
-
-async function loadStatsData() {
-    const resp = await fetch(STATS_URL);
-    return resp.json();
-}
-
-
 function createNode(mod, level, color='gray') {
     return {
         id: mod.id,
@@ -43,8 +35,7 @@ function createEdge(modFrom, modTo) {
 async function start() {
     const container = document.getElementById('container');
     ReactDOM.render(<MyApp/>, container);
-    const { stats: statsData } = await loadStatsData();
-    console.log(statsData);
+    
     // const depIds = getDepIds(statsData, moduleId);
     // const modulesMap = getModulesMap(statsData);
     
