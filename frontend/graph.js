@@ -1,6 +1,8 @@
 import React from "react";
 import { StoreContext } from "./store";
 import { getModulesMap } from "./webpack-helpers.js";
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
 function createNode(mod, level, color='gray') {
     return {
@@ -85,14 +87,24 @@ class Graph extends React.Component {
     }
 }
 
-export const ModuleGraph = (props) => {
+const styles = theme => ({
+    root: theme.mixins.gutters({
+      padding: 16,
+      marginTop: theme.spacing.unit * 3,
+    }),
+  });
+
+export const ModuleGraph = withStyles(styles)((props) => {
     return (
         <StoreContext.Consumer>
             {
                 (ctx) => {
-                    return ctx.moduleId ? <Graph statsData={ctx.statsData} moduleId={ctx.moduleId}/> : null;
+                    return ctx.moduleId ?
+                    <Paper className={props.classes.root} elevation={4}>
+                        <Graph statsData={ctx.statsData} moduleId={ctx.moduleId}/>
+                    </Paper> : null;
                 }
             }
         </StoreContext.Consumer>
     );
-}
+});
