@@ -4,7 +4,7 @@ import { getModulesMap } from "../webpack-helpers.js";
 function createNode(mod, level, color='gray') {
   return {
       id: mod.id,
-      label: mod.id,
+      label: mod.id.toString(),
       title: mod.name,
       color,
       level,
