@@ -4,6 +4,8 @@ export const StoreContext = React.createContext(
   {
     statsData: {},
     moduleId: null,
-    onModuleChange: () => {}
+    selectedAsset: null,
+    onModuleChange: () => {},
+    onAssetSelect: () => {}
   }
 );

@@ -1,9 +1,9 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from "./appBar";
+import AppBar from "./AppBar";
 import { StoreContext } from "./store";
 import { loadStatsData } from "./transport";
-import { ModuleGraph } from "./graph";
+import { ModuleGraph } from "./Graph";
 
 class MyApp extends React.Component {
   constructor(props) {
@@ -11,9 +11,15 @@ class MyApp extends React.Component {
     const onModuleChange = (moduleId) => {
       this.setState({ moduleId });
     }
+    const onAssetSelect = (selectedAsset) => {
+      console.log('Selecting asset', selectedAsset);
+      this.setState({ selectedAsset });
+    }
     this.state = {
       statsData: {},
       moduleId: null,
+      selectedAsset: null,
+      onAssetSelect,
       onModuleChange,
     }
 

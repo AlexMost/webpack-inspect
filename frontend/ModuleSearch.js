@@ -130,6 +130,11 @@ class IntegrationAutosuggest extends React.Component {
     });
   };
 
+  handleSuggestionSelected = (event, args) => {
+    console.log('selected suggestion', args.suggestion);
+    this.props.onSuggestionSelected(args.suggestion.id);
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -145,7 +150,7 @@ class IntegrationAutosuggest extends React.Component {
         suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
-        onSuggestionSelected={(ev, args) => this.props.onSuggestionSelected(args.suggestion.id)}
+        onSuggestionSelected={this.handleSuggestionSelected}
         renderSuggestionsContainer={renderSuggestionsContainer}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
@@ -167,7 +172,7 @@ IntegrationAutosuggest.propTypes = {
 function makeSuggestions(statsData) {
   if (!statsData.modules) return [];
   return statsData.modules.map((module) => {
-    return { label: module.name, id: module.id }
+    return { label: module.name, id: module.id, module }
   })
 }
 

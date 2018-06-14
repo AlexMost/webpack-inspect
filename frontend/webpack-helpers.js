@@ -1,6 +1,6 @@
-export function getModulesMap(statsData) {
+export function getModulesMap(modules) {
     const modulesMap = {};
-    statsData.modules.forEach(mod => {
+    modules.forEach(mod => {
         modulesMap[mod.id] = mod;
     });
     return modulesMap;
