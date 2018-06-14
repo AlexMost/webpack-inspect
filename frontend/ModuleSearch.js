@@ -66,19 +66,19 @@ function getSuggestionValue(suggestion) {
 function getSuggestions(value, modules) {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
+  const suggestions = [];
+  if (inputLength === 0) {
+    return [];
+  }
   let count = 0;
-
-  return inputLength === 0
-    ? []
-    : modules.filter(suggestion => {
-        const keep = count < 5 && suggestion.label.includes(inputValue);
-
-        if (keep) {
-          count += 1;
-        }
-
-        return keep;
-      });
+  for (let i = 0; i < modules.length; i++) {
+    const mod = modules[i];
+    if (mod.label.toLowerCase().indexOf(inputValue) !== -1 && count < 10) {
+      suggestions.push(mod);
+      count++;
+    }
+  }
+  return suggestions;
 }
 
 const styles = theme => ({
@@ -145,7 +145,7 @@ class IntegrationAutosuggest extends React.Component {
         suggestions={this.state.suggestions}
         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
-        onSuggestionSelected={(ev, args) => console.log(args)}
+        onSuggestionSelected={(ev, args) => this.props.onSuggestionSelected(args.suggestion.id)}
         renderSuggestionsContainer={renderSuggestionsContainer}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
@@ -174,8 +174,12 @@ function makeSuggestions(statsData) {
 const ModuleSearchWrapper = (props) => {
     return (
       <StoreContext.Consumer>
-        { ({ statsData }) => (
-            <IntegrationAutosuggest {...props} modules={makeSuggestions(statsData)}/> 
+        { ({ statsData, onModuleChange }) => (
+            <IntegrationAutosuggest
+              {...props}
+              modules={makeSuggestions(statsData)}
+              onSuggestionSelected={onModuleChange}
+            /> 
         )}
       </StoreContext.Consumer>
     )

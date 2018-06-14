@@ -2,6 +2,8 @@ import React from 'react';
 
 export const StoreContext = React.createContext(
   {
-    statsData: {}
+    statsData: {},
+    moduleId: null,
+    onModuleChange: () => {}
   }
 );

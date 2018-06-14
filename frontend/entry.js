@@ -14,24 +14,6 @@ const edges = [
     // { target: "2", source: "1", strength: 0.1 }
 ]
 
-function createNode(mod, level, color='gray') {
-    return {
-        id: mod.id,
-        label: mod.id,
-        title: mod.name,
-        color,
-        level,
-    }
-}
-
-function createEdge(modFrom, modTo) {
-    return {
-        from: modFrom.id,
-        to: modTo.id,
-        arrows: "from",
-    }
-}
-
 async function start() {
     const container = document.getElementById('container');
     ReactDOM.render(<MyApp/>, container);
