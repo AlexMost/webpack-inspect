@@ -1,11 +1,9 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from "./AppBar";
-import { StoreContext } from "./store";
-import { loadStatsData } from "./transport";
-import { ModuleGraph } from "./Graph";
+import { StoreContext } from "../store";
+import { loadStatsData } from "../transport";
 
-class MyApp extends React.Component {
+export class AppContainer extends React.Component {
   constructor(props) {
     super(props);
     const onModuleChange = (moduleId) => {
@@ -31,14 +29,9 @@ class MyApp extends React.Component {
   render() {
     return (
       <StoreContext.Provider value={this.state}>
-        <React.Fragment>
-          <CssBaseline />
-          <AppBar title="Deps inspector"/>
-          <ModuleGraph/>
-        </React.Fragment>
+        <CssBaseline />
+        {this.props.children}
       </StoreContext.Provider>
     );
   }
 }
-
-export default MyApp

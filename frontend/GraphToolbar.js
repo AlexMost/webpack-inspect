@@ -13,17 +13,20 @@ const styles = {
   flex: {
     flex: 1,
   },
+  toolbar: {
+    marginBottom: 8
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
   },
 };
 
-function SimpleAppBar(props) {
+function GraphToolbarComponent(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar className={classes.toolbar} position="static">
         <Toolbar>
           <ModuleSearch/>
           <AssetsSelect/>
@@ -33,8 +36,8 @@ function SimpleAppBar(props) {
   );
 }
 
-SimpleAppBar.propTypes = {
+GraphToolbarComponent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleAppBar);
+export const GraphToolbar = withStyles(styles)(GraphToolbarComponent);
