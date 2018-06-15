@@ -2,6 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { StoreContext } from "../store";
 import { loadStatsData } from "../transport";
+import { getClusterMap } from "../clusterize";
 
 export class AppContainer extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export class AppContainer extends React.Component {
     }
     this.state = {
       statsData: {},
+      clusterMap: {},
       moduleId: null,
       selectedAsset: null,
       onAssetSelect,
@@ -24,7 +26,8 @@ export class AppContainer extends React.Component {
   }
   async componentDidMount() {
     const { stats: statsData } = await loadStatsData();
-    this.setState({ statsData });
+    const clusterMap = getClusterMap(statsData.modules);
+    this.setState({ statsData, clusterMap });
   }
   render() {
     return (

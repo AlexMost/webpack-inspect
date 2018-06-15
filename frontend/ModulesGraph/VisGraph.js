@@ -19,23 +19,48 @@ function createEdge(modFrom, modTo) {
   }
 }
 
-function drawVizGraph({ nodes, edges }) {
-  var container = document.getElementById('graph-container');
-  var data = {
+function drawVizGraph({ nodes, edges, clusterMap }) {
+    var container = document.getElementById('graph-container');
+    var data = {
     nodes: nodes,
     edges: edges
-  };
-  var options = {
-      nodes: {
-          shape: 'circle'
-      },
-      layout: {
-          hierarchical: {
-              direction: 'DU'
-          }
-      }
-  };
-  var network = new vis.Network(container, data, options);
+    };
+    var options = {
+        nodes: {
+            shape: 'circle'
+        },
+        layout: {
+            hierarchical: {
+                direction: 'DU'
+            }
+        }
+    };
+    var network = new vis.Network(container, data, options);
+
+    // clusterization
+
+    const clusters = {};
+    nodes.forEach(({ id, level }) => {
+        const cluster = clusterMap[id];
+        if (cluster) {
+            if (!clusters[cluster]) {
+                clusters[cluster] = { ids: new Set(), level };
+            }
+            clusters[cluster].ids.add(id);
+        }
+    })
+
+    Object.keys(clusters).forEach((clusterName) => {
+        const cluster = clusters[clusterName];
+
+        const clusterOptionsByData = {
+            joinCondition:function(childOptions) {
+                return cluster.ids.has(childOptions.id);
+            },
+            clusterNodeProperties: { id: clusterName, borderWidth:3, shape:'box', label: clusterName, level: cluster.level }
+        }
+        network.cluster(clusterOptionsByData);
+    })
 }
 
 function getAssetChunks(statsData, assetName) {
@@ -57,7 +82,7 @@ function getChunksModulesSet(statsData, asset) {
   return new Set(moduleIds);
 }
 
-function renderGraph(statsData, moduleId, selectedAsset) {
+function renderGraph({ statsData, moduleId, selectedAsset, clusterMap }) {
   let modules = [...statsData.modules]; // copy for modifying
 
   if (selectedAsset) {
@@ -93,10 +118,10 @@ function renderGraph(statsData, moduleId, selectedAsset) {
   }
   if (modulesMap[moduleId] !== undefined) {
       walk(modulesMap[moduleId]);
-      drawVizGraph({ nodes, edges });
+      drawVizGraph({ nodes, edges, clusterMap});
   } else {
       const node = statsData.modules.find((m) => m.id === moduleId);
-      drawVizGraph({ nodes: [createNode(node, 0, 'red')], edges: [] });
+      drawVizGraph({ nodes: [createNode(node, 0, 'red')], edges: [], clusterMap });
       console.warn('TODO: handle when there is no deps for the selected asset');
   }
 }
@@ -109,18 +134,10 @@ function createMarkup() {
 
 export class VisGraph extends React.Component {
   componentDidMount() {
-      renderGraph(
-          this.props.statsData,
-          this.props.moduleId,
-          this.props.selectedAsset
-      );
+      renderGraph(this.props);
   }
   componentDidUpdate(){
-      renderGraph(
-          this.props.statsData,
-          this.props.moduleId,
-          this.props.selectedAsset
-      );
+      renderGraph(this.props);
   }
   render() {
       return <div dangerouslySetInnerHTML={createMarkup()}></div>;

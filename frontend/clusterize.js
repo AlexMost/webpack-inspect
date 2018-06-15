@@ -10,11 +10,14 @@ class Cluster {
         this.name = name;
         this.modIds = new Set();
     }
+    getName() {
+        return this.name;
+    }
     hasModule(id) {
         return this.modIds.has(id);
     }
-    getModules() {
-        return this.modIds;
+    getModulesIds() {
+        return Array.from(this.modIds);
     }
     getSize(){
         return this.modIds.size;
@@ -94,4 +97,16 @@ export function getModulesClusters(modules) {
     const othersClusters = getOthersClusters(others);
     const clusters = [...nodeModulesClusters, ...othersClusters];
     return clusters;
+}
+
+
+export function getClusterMap(modules) {
+    const clusters = getModulesClusters(modules);
+    const map = {};
+    clusters.forEach((cluster) => {
+        cluster.getModulesIds().forEach((modId) => {
+            map[modId] = cluster.getName();
+        });
+    });
+    return map;
 }

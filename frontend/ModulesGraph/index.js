@@ -22,6 +22,7 @@ export const ModulesGraph = withStyles(styles)((props) => {
                             statsData={ctx.statsData}
                             moduleId={ctx.moduleId}
                             selectedAsset={ctx.selectedAsset}
+                            clusterMap={ctx.clusterMap}
                         />
                     </Paper> : null;
                 }
