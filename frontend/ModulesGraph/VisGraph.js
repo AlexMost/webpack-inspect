@@ -7,7 +7,7 @@ function createNode(mod, level, color='gray') {
       label: mod.id.toString(),
       title: mod.name,
       color,
-      level,
+      level
   }
 }
 
@@ -57,7 +57,15 @@ function drawVizGraph({ nodes, edges, clusterMap }) {
             joinCondition:function(childOptions) {
                 return cluster.ids.has(childOptions.id);
             },
-            clusterNodeProperties: { id: clusterName, borderWidth:3, shape:'box', label: clusterName, level: cluster.level }
+            clusterNodeProperties: {
+              id: clusterName,
+              borderWidth:3,
+              shape:'dot',
+              size: 30,
+              label: clusterName.replace('/work/uaprom/cs/domain/', ''),
+              level: cluster.level,
+              font: { size: 10, color: 'gray' }
+            }
         }
         network.cluster(clusterOptionsByData);
     })
