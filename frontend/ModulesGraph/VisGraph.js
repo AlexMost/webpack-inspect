@@ -121,11 +121,11 @@ function renderGraph({ statsData, moduleId, selectedAsset, clusterMap, onNodeCli
 
             node
                 .reasons
-                .filter((r) => !visited.has(r.moduleId))
-                .forEach(reason => {
+                .filter((reason) => !! modulesMap[reason.moduleId])
+                .forEach((reason) => {
                     const reasonMod = modulesMap[reason.moduleId];
-                    if (reasonMod) {
-                        edges.push(createEdge(node, reasonMod));
+                    edges.push(createEdge(node, reasonMod));
+                    if (!visited.has(reason.moduleId)) {
                         walk(reasonMod, level + 1);
                     }
                 });

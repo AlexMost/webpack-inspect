@@ -20,7 +20,6 @@ const styles = theme => ({
 const SidebarComponent = withStyles(styles)((props) => {
     const { classes } = props;
     const module = props.modules.find((m) => m.id === props.selectedModuleId);
-    debugger;
     return (
         <Paper className={classes.paper}>
             <Typography align="left" variant="title">{module.name}</Typography>
@@ -29,7 +28,7 @@ const SidebarComponent = withStyles(styles)((props) => {
             </Typography>
             <ul>
                 { module.reasons.map((reason) => {
-                    return <li><Typography align="left">{reason.module}</Typography></li>
+                    return <li key={reason.module}><Typography align="left">{reason.module}</Typography></li>
                 })}
             </ul>
         </Paper>
