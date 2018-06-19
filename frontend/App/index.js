@@ -2,9 +2,9 @@ import React from "react";
 import { AppContainer } from "./container";
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import { GraphToolbar } from "../GraphToolbar";
 import { ModulesGraph } from "../ModulesGraph/index";
+import Sidebar from "../Sidebar/index";
 
 const styles = theme => ({
   root: {
@@ -29,7 +29,7 @@ export const App = withStyles(styles)((props) => {
             <ModulesGraph />
           </Grid>
           <Grid item xs={3}>
-            <Paper className={classes.paper} >graph details:</Paper>
+            <Sidebar/>
           </Grid>
         </Grid>
       </div>

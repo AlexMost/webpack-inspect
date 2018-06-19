@@ -23,6 +23,7 @@ export const ModulesGraph = withStyles(styles)((props) => {
                             moduleId={ctx.moduleId}
                             selectedAsset={ctx.selectedAsset}
                             clusterMap={ctx.clusterMap}
+                            onNodeClick={ctx.onSelectModule}
                         />
                     </Paper> : null;
                 }

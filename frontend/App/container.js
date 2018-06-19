@@ -7,20 +7,29 @@ import { getClusterMap } from "../clusterize";
 export class AppContainer extends React.Component {
   constructor(props) {
     super(props);
+
     const onModuleChange = (moduleId) => {
-      this.setState({ moduleId });
+      this.setState({ moduleId, selectedModuleId: moduleId });
     }
     const onAssetSelect = (selectedAsset) => {
       console.log('Selecting asset', selectedAsset);
       this.setState({ selectedAsset });
     }
+
+    const onSelectModule = (args) => {
+      console.log('selecting module', args.node);
+      this.setState({ selectedModuleId: args.node });
+    }
+
     this.state = {
       statsData: {},
       clusterMap: {},
       moduleId: null,
       selectedAsset: null,
+      selectedModuleId: null,
       onAssetSelect,
       onModuleChange,
+      onSelectModule,
     }
 
   }
