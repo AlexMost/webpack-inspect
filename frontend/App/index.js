@@ -1,38 +1,63 @@
 import React from "react";
-import { AppContainer } from "./container";
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
+import { AppContainer } from "./container";
 import { GraphToolbar } from "../GraphToolbar";
 import { ModulesGraph } from "../ModulesGraph/index";
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Sidebar from "../Sidebar/index";
+import { styles } from "./styles";
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    height: '100vh',
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-});
+class AppComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: true
+    }
+  }
 
-export const App = withStyles(styles)((props) => {
-  const { classes } = props;
-  return (
-    <AppContainer>
-      <GraphToolbar title="Deps inspector" />
-      <div className={classes.root}>
-        <Grid container spacing={8}>
-          <Grid item xs={9}>
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  }
+
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <AppContainer>
+        <div className={classes.root}>
+          <GraphToolbar
+            title="Deps inspector"
+            handleArrowLeftClick={this.handleDrawerOpen}
+          />
+          <main className={classes.content}>
             <ModulesGraph />
-          </Grid>
-          <Grid item xs={3}>
-            <Sidebar/>
-          </Grid>
-        </Grid>
-      </div>
-    </AppContainer>
-  );
-});
+          </main>
+          <Drawer
+            variant="persistent"
+            anchor="right"
+            open={this.state.open}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <div className={classes.drawerHeader}>
+              <IconButton onClick={this.handleDrawerClose}>
+                <ChevronRightIcon />
+              </IconButton>
+            </div>
+            <Divider />
+            <Sidebar />
+          </Drawer>
+        </div>
+      </AppContainer>
+    );
+  }
+}
+
+export const App = withStyles(styles)(AppComponent)

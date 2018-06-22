@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "front:build": "webpack --mode development",
-    "server:start": "NODE_ENV=development nodemon index.js"
+    "build": "webpack --mode development",
+    "start": "NODE_ENV=development nodemon index.js"
   },
   "author": "",
   "license": "ISC",

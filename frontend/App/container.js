@@ -11,10 +11,6 @@ export class AppContainer extends React.Component {
     const onModuleChange = (moduleId) => {
       this.setState({ moduleId, selectedModuleId: moduleId });
     }
-    const onAssetSelect = (selectedAsset) => {
-      console.log('Selecting asset', selectedAsset);
-      this.setState({ selectedAsset });
-    }
 
     const onSelectModule = (args) => {
       console.log('selecting module', args.node);
@@ -25,9 +21,7 @@ export class AppContainer extends React.Component {
       statsData: {},
       clusterMap: {},
       moduleId: null,
-      selectedAsset: null,
       selectedModuleId: null,
-      onAssetSelect,
       onModuleChange,
       onSelectModule,
     }

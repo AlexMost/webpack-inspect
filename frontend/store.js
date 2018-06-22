@@ -6,9 +6,7 @@ export const StoreContext = React.createContext(
     clusterMap: {},
     moduleId: null,
     selectedModuleId: null,
-    selectedAsset: null,
     onModuleChange: () => {},
-    onAssetSelect: () => {},
     onSelectModule: () => {},
   }
 );
