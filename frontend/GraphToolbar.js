@@ -8,9 +8,6 @@ import ModuleSearch from "./ModuleSearch";
 const styles = {
   toolbar: {
     position: "absolute",
-  },
-  gutters: {
-    paddingRight: "8px"
   }
 };
 
@@ -18,11 +15,7 @@ function GraphToolbarComponent(props) {
   const { classes } = props;
   return (
     <AppBar className={classes.toolbar} position="static">
-      <Toolbar
-        classes={{
-          gutters: classes.gutters
-        }}
-      >
+      <Toolbar>
         <ModuleSearch/>
       </Toolbar>
     </AppBar>
