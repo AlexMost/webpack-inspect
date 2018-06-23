@@ -20,6 +20,7 @@ function createEdge(modFrom, modTo) {
 }
 
 function drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd }) {
+    console.log(`Rendering graph: nodes - ${nodes.length}; edges - ${edges.length}`);
     var container = document.getElementById('graph-container');
     var data = {
         nodes: nodes,
@@ -119,6 +120,7 @@ function renderGraph({ statsData, moduleId, selectedAsset, clusterMap, onNodeCli
     console.log(`Rendering graph for ${moduleId}. Asset - ${selectedAsset}`);
 
     function walk(node, level = 0) {
+        if (level > 2) return;
         if (!visited.has(node.id)) {
 
             visited.add(node.id);

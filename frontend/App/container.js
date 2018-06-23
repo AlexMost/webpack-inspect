@@ -13,17 +13,14 @@ export class AppContainer extends React.Component {
     }
 
     const onSelectModule = (args) => {
-      console.log('>>> selecting module', args.node);
       this.setState({ selectedModuleId: args.node });
     }
 
     const onDrawStart = () => {
-      console.log('>>> draw start');
       this.setState({ isDrawing: true });
     }
 
     const onDrawEnd = () => {
-      console.log('>>> draw end');
       this.setState({ isDrawing: false });
     }
 
