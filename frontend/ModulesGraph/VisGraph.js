@@ -15,7 +15,7 @@ function createEdge(modFrom, modTo) {
     return {
         from: modFrom.id,
         to: modTo.id,
-        arrows: "from",
+        arrows: "to",
     }
 }
 
@@ -73,12 +73,10 @@ function drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd }) {
     // })
     network.on("click", function (params) {
         if (params.nodes.length > 0) {
-            console.log('node click', params);
             onNodeClick({ node: params.nodes[0] });
         }
     });
     network.on("afterDrawing", function(args) {
-        console.log("afterDrawing event", args);
         onDrawEnd();
     })
 }
