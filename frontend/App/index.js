@@ -8,6 +8,7 @@ import { ModulesGraph } from "../ModulesGraph/index";
 import Sidebar from "../Sidebar/index";
 import { styles } from "./styles";
 
+
 const AppComponent = (props) => {
   const { classes } = props;
   return (

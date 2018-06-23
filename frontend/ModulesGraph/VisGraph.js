@@ -19,7 +19,7 @@ function createEdge(modFrom, modTo) {
     }
 }
 
-function drawVizGraph({ nodes, edges, clusterMap, onNodeClick }) {
+function drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd }) {
     var container = document.getElementById('graph-container');
     var data = {
         nodes: nodes,
@@ -76,6 +76,10 @@ function drawVizGraph({ nodes, edges, clusterMap, onNodeClick }) {
             onNodeClick({ node: params.nodes[0] });
         }
     });
+    network.on("afterDrawing", function(args) {
+        console.log("afterDrawing event", args);
+        onDrawEnd();
+    })
 }
 
 function getAssetChunks(statsData, assetName) {
@@ -97,7 +101,8 @@ function getChunksModulesSet(statsData, asset) {
     return new Set(moduleIds);
 }
 
-function renderGraph({ statsData, moduleId, selectedAsset, clusterMap, onNodeClick }) {
+function renderGraph({ statsData, moduleId, selectedAsset, clusterMap, onNodeClick, onDrawEnd, onDrawStart }) {
+    onDrawStart();
     let modules = [...statsData.modules]; // copy for modifying
 
     if (selectedAsset) {
@@ -133,10 +138,10 @@ function renderGraph({ statsData, moduleId, selectedAsset, clusterMap, onNodeCli
     }
     if (modulesMap[moduleId] !== undefined) {
         walk(modulesMap[moduleId]);
-        drawVizGraph({ nodes, edges, clusterMap, onNodeClick });
+        drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd });
     } else {
         const node = statsData.modules.find((m) => m.id === moduleId);
-        drawVizGraph({ nodes: [createNode(node, 0, 'red')], edges: [], clusterMap, onNodeClick });
+        drawVizGraph({ nodes: [createNode(node, 0, 'red')], edges: [], clusterMap, onNodeClick, onDrawEnd });
         console.warn('TODO: handle when there is no deps for the selected asset');
     }
 }

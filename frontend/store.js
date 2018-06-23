@@ -8,5 +8,8 @@ export const StoreContext = React.createContext(
     selectedModuleId: null,
     onModuleChange: () => {},
     onSelectModule: () => {},
+    onDrawStart: () => {},
+    onDrawEnd: () => {},
+    isDrawing: false,
   }
 );
