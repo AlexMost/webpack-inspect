@@ -19,6 +19,40 @@ function createEdge(modFrom, modTo) {
     }
 }
 
+function makeClusters(network, nodes, clusterMap) {
+    const clusters = {};
+    nodes.forEach(({ id, level }) => {
+        const cluster = clusterMap[id];
+        if (cluster) {
+            const clusterName = cluster.getId();
+            if (!clusters[clusterName]) {
+                clusters[clusterName] = { ids: new Set(), level };
+            }
+            clusters[clusterName].ids.add(id);
+        }
+    })
+
+    Object.keys(clusters).forEach((clusterName) => {
+        const cluster = clusters[clusterName];
+
+        const clusterOptionsByData = {
+            joinCondition:function(childOptions) {
+                return cluster.ids.has(childOptions.id);
+            },
+            clusterNodeProperties: {
+              id: clusterName,
+              borderWidth:3,
+              shape:'dot',
+              size: 30,
+              label: clusterName.replace('/work/uaprom/cs/domain/', ''),
+              level: cluster.level,
+              font: { size: 10, color: 'gray' }
+            }
+        }
+        network.cluster(clusterOptionsByData);
+    })
+}
+
 function drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd }) {
     console.log(`Rendering graph: nodes - ${nodes.length}; edges - ${edges.length}`);
     var container = document.getElementById('graph-container');
@@ -40,43 +74,14 @@ function drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd }) {
     var network = new vis.Network(container, data, options);
 
     // clusterization
+    // makeClusters(network, nodes, clusterMap);
 
-    // const clusters = {};
-    // nodes.forEach(({ id, level }) => {
-    //     const cluster = clusterMap[id];
-    //     if (cluster) {
-    //         if (!clusters[cluster]) {
-    //             clusters[cluster] = { ids: new Set(), level };
-    //         }
-    //         clusters[cluster].ids.add(id);
-    //     }
-    // })
-
-    // Object.keys(clusters).forEach((clusterName) => {
-    //     const cluster = clusters[clusterName];
-
-    //     const clusterOptionsByData = {
-    //         joinCondition:function(childOptions) {
-    //             return cluster.ids.has(childOptions.id);
-    //         },
-    //         clusterNodeProperties: {
-    //           id: clusterName,
-    //           borderWidth:3,
-    //           shape:'dot',
-    //           size: 30,
-    //           label: clusterName.replace('/work/uaprom/cs/domain/', ''),
-    //           level: cluster.level,
-    //           font: { size: 10, color: 'gray' }
-    //         }
-    //     }
-    //     network.cluster(clusterOptionsByData);
-    // })
     network.on("click", function (params) {
         if (params.nodes.length > 0) {
             onNodeClick({ node: params.nodes[0] });
         }
     });
-    network.on("afterDrawing", function(args) {
+    network.on("afterDrawing", function (args) {
         onDrawEnd();
     })
 }
@@ -100,7 +105,9 @@ function getChunksModulesSet(statsData, asset) {
     return new Set(moduleIds);
 }
 
-function renderGraph({ statsData, moduleId, selectedAsset, clusterMap, onNodeClick, onDrawEnd, onDrawStart }) {
+function renderGraph({ statsData, moduleId, selectedAsset,
+    clusterMap, onNodeClick, onDrawEnd, onDrawStart
+}) {
     onDrawStart();
     let modules = [...statsData.modules]; // copy for modifying
 
@@ -126,7 +133,7 @@ function renderGraph({ statsData, moduleId, selectedAsset, clusterMap, onNodeCli
 
             node
                 .reasons
-                .filter((reason) => !! modulesMap[reason.moduleId])
+                .filter((reason) => !!modulesMap[reason.moduleId])
                 .forEach((reason) => {
                     const reasonMod = modulesMap[reason.moduleId];
                     edges.push(createEdge(node, reasonMod));

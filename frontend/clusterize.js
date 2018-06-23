@@ -1,17 +1,21 @@
-const NPM_SIMPLE_PATTERN = /(.*?\/node_modules\/.*?)\//;
-const NPM_SCOPED_PATTERN = /(.*?\/node_modules\/@.*?\/.*?)\//;
-const WEBPACK_BUILTIN_PATTERN = /\(webpack\)/;
+import { isNPMPackage, isWebpackBuiltin, NPM_SCOPED_PATTERN, NPM_SIMPLE_PATTERN } from "./webpack-helpers";
+
+const CAPITAL_LETTER = /[A-Z]/;
 
 class Cluster {
-    constructor(name) {
-        if (!name) {
+    constructor(id) {
+        if (!id) {
             throw new Error('Missing name argument');
         }
-        this.name = name;
+        this.id = id;
         this.modIds = new Set();
     }
+    getId() {
+        return this.id;
+    }
     getName() {
-        return this.name;
+        const parts = this.id.split('/')
+        return parts[parts.length - 1];
     }
     hasModule(id) {
         return this.modIds.has(id);
@@ -51,7 +55,7 @@ function getOtherClusterName(modPath) {
     for (let i = 0; i < parts.length; i++) {
         const part = parts[i];
         result.push(part);
-        if (/[A-Z]/.test(part[0])) {
+        if (CAPITAL_LETTER.test(part[0])) {
             break;
         }
     }
@@ -61,7 +65,7 @@ function getOtherClusterName(modPath) {
 function getOthersClusters(modules) {
     const clusters = {};
     modules.forEach((m) => {
-        if (/[A-Z]/.test(m.name)) {
+        if (CAPITAL_LETTER.test(m.name)) {
             const clusterName = getOtherClusterName(m.name);
             if (!clusters[clusterName]) {
                 clusters[clusterName] = new Cluster(clusterName);
@@ -84,9 +88,9 @@ export function getModulesClusters(modules) {
     const others = [];
 
     modules.forEach(m => {
-        if (m.name.match(WEBPACK_BUILTIN_PATTERN)) {
+        if (isWebpackBuiltin(m.name)) {
             webpackBuiltin.push(m);
-        } else if (m.name.match(NPM_SIMPLE_PATTERN)) {
+        } else if (isNPMPackage(m.name)) {
             nodeModules.push(m);
         } else {
             others.push(m);
@@ -105,7 +109,7 @@ export function getClusterMap(modules) {
     const map = {};
     clusters.forEach((cluster) => {
         cluster.getModulesIds().forEach((modId) => {
-            map[modId] = cluster.getName();
+            map[modId] = cluster;
         });
     });
     return map;

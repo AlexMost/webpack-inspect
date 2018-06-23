@@ -3,6 +3,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { StoreContext } from "../store";
 import { loadStatsData } from "../transport";
 import { getClusterMap } from "../clusterize";
+import { getModulesPrefixes } from "../webpack-helpers";
 
 export class AppContainer extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export class AppContainer extends React.Component {
     this.state = {
       statsData: {},
       clusterMap: {},
+      modulesPrefixes: [],
       moduleId: null,
       isDrawing: false,
       selectedModuleId: null,
@@ -40,6 +42,8 @@ export class AppContainer extends React.Component {
   async componentDidMount() {
     const { stats: statsData } = await loadStatsData();
     const clusterMap = getClusterMap(statsData.modules);
+    const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
+    console.log(prefixes);
     this.setState({ statsData, clusterMap });
   }
   render() {
