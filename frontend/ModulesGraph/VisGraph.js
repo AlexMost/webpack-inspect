@@ -19,41 +19,43 @@ function createEdge(modFrom, modTo) {
     }
 }
 
-function makeClusters(network, nodes, clusterMap) {
-    const clusters = {};
-    nodes.forEach(({ id, level }) => {
-        const cluster = clusterMap[id];
-        if (cluster) {
-            const clusterName = cluster.getId();
-            if (!clusters[clusterName]) {
-                clusters[clusterName] = { ids: new Set(), level };
-            }
-            clusters[clusterName].ids.add(id);
-        }
-    })
+// TODO: rewrite clusterization logic (get cluster id from module)
 
-    Object.keys(clusters).forEach((clusterName) => {
-        const cluster = clusters[clusterName];
+// function makeClusters(network, nodes, clusterMap) {
+//     const clusters = {};
+//     nodes.forEach(({ id, level }) => {
+//         const cluster = clusterMap[id];
+//         if (cluster) {
+//             const clusterName = cluster.getId();
+//             if (!clusters[clusterName]) {
+//                 clusters[clusterName] = { ids: new Set(), level };
+//             }
+//             clusters[clusterName].ids.add(id);
+//         }
+//     })
 
-        const clusterOptionsByData = {
-            joinCondition:function(childOptions) {
-                return cluster.ids.has(childOptions.id);
-            },
-            clusterNodeProperties: {
-              id: clusterName,
-              borderWidth:3,
-              shape:'dot',
-              size: 30,
-              label: clusterName.replace('/work/uaprom/cs/domain/', ''),
-              level: cluster.level,
-              font: { size: 10, color: 'gray' }
-            }
-        }
-        network.cluster(clusterOptionsByData);
-    })
-}
+//     Object.keys(clusters).forEach((clusterName) => {
+//         const cluster = clusters[clusterName];
 
-function drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd }) {
+//         const clusterOptionsByData = {
+//             joinCondition:function(childOptions) {
+//                 return cluster.ids.has(childOptions.id);
+//             },
+//             clusterNodeProperties: {
+//               id: clusterName,
+//               borderWidth:3,
+//               shape:'dot',
+//               size: 30,
+//               label: clusterName.replace('/work/uaprom/cs/domain/', ''),
+//               level: cluster.level,
+//               font: { size: 10, color: 'gray' }
+//             }
+//         }
+//         network.cluster(clusterOptionsByData);
+//     })
+// }
+
+function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }) {
     console.log(`Rendering graph: nodes - ${nodes.length}; edges - ${edges.length}`);
     var container = document.getElementById('graph-container');
     var data = {
@@ -86,43 +88,12 @@ function drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd }) {
     })
 }
 
-function getAssetChunks(statsData, assetName) {
-    if (!assetName) return [];
-    const asset = statsData.assets.find((a) => a.name === assetName)
-    return asset ? asset.chunks : [];
-}
-
-function getChunksModulesSet(statsData, asset) {
-    const chunks = getAssetChunks(statsData, asset)
-        .map((chId) => statsData.chunks.find((c) => c.id === chId));
-
-    let moduleIds = [];
-    chunks.forEach((chunk) => {
-        const modIds = chunk.modules.map(({ id }) => id);
-        moduleIds = moduleIds.concat(modIds);
-    });
-
-    return new Set(moduleIds);
-}
-
-function renderGraph({ statsData, moduleId, selectedAsset,
-    clusterMap, onNodeClick, onDrawEnd, onDrawStart
-}) {
+function renderGraph({ modules, moduleId, onNodeClick, onDrawEnd, onDrawStart }) {
     onDrawStart();
-    let modules = [...statsData.modules]; // copy for modifying
-
-    if (selectedAsset) {
-        const moduleIdsSet = getChunksModulesSet(statsData, selectedAsset);
-        console.log(moduleIdsSet);
-        modules = modules.filter(({ id }) => moduleIdsSet.has(id));
-    }
-
     const modulesMap = getModulesMap(modules);
     const nodes = [];
     const edges = [];
     const visited = new Set();
-
-    console.log(`Rendering graph for ${moduleId}. Asset - ${selectedAsset}`);
 
     function walk(node, level = 0) {
         if (level > 2) return;
@@ -143,14 +114,9 @@ function renderGraph({ statsData, moduleId, selectedAsset,
                 });
         }
     }
-    if (modulesMap[moduleId] !== undefined) {
-        walk(modulesMap[moduleId]);
-        drawVizGraph({ nodes, edges, clusterMap, onNodeClick, onDrawEnd });
-    } else {
-        const node = statsData.modules.find((m) => m.id === moduleId);
-        drawVizGraph({ nodes: [createNode(node, 0, 'red')], edges: [], clusterMap, onNodeClick, onDrawEnd });
-        console.warn('TODO: handle when there is no deps for the selected asset');
-    }
+    
+    walk(modulesMap[moduleId]);
+    drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd });
 }
 
 function createMarkup() {

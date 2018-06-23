@@ -26,7 +26,7 @@ const Sidebar = () => {
             {
                 ctx => (
                     <SidebarComponent
-                        modules={ctx.statsData.modules || []}
+                        modules={ctx.modules || []}
                         selectedModuleId={ctx.selectedModuleId}
                     />
                 )

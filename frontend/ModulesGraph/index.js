@@ -9,7 +9,7 @@ export const ModulesGraph = () => {
       {ctx => {
         return ctx.moduleId ? (
           <VisGraph
-            statsData={ctx.statsData}
+            modules={ctx.modules}
             moduleId={ctx.moduleId}
             selectedAsset={ctx.selectedAsset}
             clusterMap={ctx.clusterMap}

@@ -169,9 +169,8 @@ IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-function makeSuggestions(statsData) {
-  if (!statsData.modules) return [];
-  return statsData.modules.map((module) => {
+function makeSuggestions(modules) {
+  return modules.map((module) => {
     return { label: module.name, id: module.id, module }
   })
 }
@@ -179,10 +178,10 @@ function makeSuggestions(statsData) {
 const ModuleSearchWrapper = (props) => {
     return (
       <StoreContext.Consumer>
-        { ({ statsData, onModuleChange }) => (
+        { ({ modules, onModuleChange }) => (
             <IntegrationAutosuggest
               {...props}
-              modules={makeSuggestions(statsData)}
+              modules={makeSuggestions(modules)}
               onSuggestionSelected={onModuleChange}
             /> 
         )}

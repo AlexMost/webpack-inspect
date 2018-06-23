@@ -5,6 +5,21 @@ import { loadStatsData } from "../transport";
 import { getClusterMap } from "../clusterize";
 import { getModulesPrefixes } from "../webpack-helpers";
 
+function makeModules(statsData) {
+  const clusterMap = getClusterMap(statsData.modules);
+  const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
+  
+  // TODO: implement module short name
+  console.log(prefixes);
+  return statsData.modules.map((module) => {
+    return {
+      id: module.id,
+      name: module.name,
+      reasons: module.reasons
+    }
+  })
+}
+
 export class AppContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -26,9 +41,7 @@ export class AppContainer extends React.Component {
     }
 
     this.state = {
-      statsData: {},
-      clusterMap: {},
-      modulesPrefixes: [],
+      modules: [],
       moduleId: null,
       isDrawing: false,
       selectedModuleId: null,
@@ -41,10 +54,8 @@ export class AppContainer extends React.Component {
   }
   async componentDidMount() {
     const { stats: statsData } = await loadStatsData();
-    const clusterMap = getClusterMap(statsData.modules);
-    const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
-    console.log(prefixes);
-    this.setState({ statsData, clusterMap });
+    const modules = makeModules(statsData);
+    this.setState({ statsData, modules });
   }
   render() {
     return (
