@@ -46,8 +46,8 @@ class LayoutComponent extends React.Component {
               [classes[`contentShift-right`]]: open
             })}
           >
-            <div className={classes.drawerHeader} />
-            <DrawingProgress />
+            {/* <div className={classes.drawerHeader} /> */}
+            {/* <DrawingProgress /> */}
             <ModulesGraph />
           </main>
           <Drawer
