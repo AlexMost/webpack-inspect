@@ -50,6 +50,8 @@ export const styles = theme => ({
   },
   content: {
     flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
     transition: theme.transitions.create("margin", {
