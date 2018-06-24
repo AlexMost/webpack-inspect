@@ -1,5 +1,5 @@
 function html({ title }) {
-    return `
+  return `
     <!DOCTYPE html>
     <html>
     <head>
@@ -15,7 +15,7 @@ function html({ title }) {
         <script type="text/javascript" src="app.js"></script>
     </body>
     </html>
-    `
+    `;
 }
 
 module.exports = html;

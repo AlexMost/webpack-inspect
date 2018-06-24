@@ -2,7 +2,6 @@ import React from "react";
 import { StoreContext } from "../Store";
 import { VisGraph } from "./VisGraph";
 
-
 export const ModulesGraph = () => {
   return (
     <StoreContext.Consumer>

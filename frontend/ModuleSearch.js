@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Autosuggest from 'react-autosuggest';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
+import React from "react";
+import PropTypes from "prop-types";
+import Autosuggest from "react-autosuggest";
+import match from "autosuggest-highlight/match";
+import parse from "autosuggest-highlight/parse";
+import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper";
+import MenuItem from "@material-ui/core/MenuItem";
+import { withStyles } from "@material-ui/core/styles";
 import { StoreContext } from "./Store";
 
 function renderInput(inputProps) {
@@ -18,9 +18,9 @@ function renderInput(inputProps) {
       InputProps={{
         inputRef: ref,
         classes: {
-          input: classes.input,
+          input: classes.input
         },
-        ...other,
+        ...other
       }}
     />
   );
@@ -84,22 +84,22 @@ function getSuggestions(value, modules) {
 const styles = theme => ({
   container: {
     flexGrow: 1,
-    position: 'relative',
+    position: "relative"
   },
   suggestionsContainerOpen: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
     marginTop: theme.spacing.unit,
     left: 0,
-    right: 0,
+    right: 0
   },
   suggestion: {
-    display: 'block',
+    display: "block"
   },
   suggestionsList: {
     margin: 0,
     padding: 0,
-    listStyleType: 'none',
+    listStyleType: "none"
   },
   input: {
     color: "white"
@@ -108,32 +108,32 @@ const styles = theme => ({
 
 class IntegrationAutosuggest extends React.Component {
   state = {
-    value: '',
-    suggestions: [],
+    value: "",
+    suggestions: []
   };
 
   handleSuggestionsFetchRequested = ({ value }) => {
     this.setState({
-      suggestions: getSuggestions(value, this.props.modules),
+      suggestions: getSuggestions(value, this.props.modules)
     });
   };
 
   handleSuggestionsClearRequested = () => {
     this.setState({
-      suggestions: [],
+      suggestions: []
     });
   };
 
   handleChange = (event, { newValue }) => {
     this.setState({
-      value: newValue,
+      value: newValue
     });
   };
 
   handleSuggestionSelected = (event, args) => {
-    console.log('selected suggestion', args.suggestion);
+    console.log("selected suggestion", args.suggestion);
     this.props.onSuggestionSelected(args.suggestion.id);
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -144,7 +144,7 @@ class IntegrationAutosuggest extends React.Component {
           container: classes.container,
           suggestionsContainerOpen: classes.suggestionsContainerOpen,
           suggestionsList: classes.suggestionsList,
-          suggestion: classes.suggestion,
+          suggestion: classes.suggestion
         }}
         renderInputComponent={renderInput}
         suggestions={this.state.suggestions}
@@ -156,9 +156,9 @@ class IntegrationAutosuggest extends React.Component {
         renderSuggestion={renderSuggestion}
         inputProps={{
           classes,
-          placeholder: 'Search for module',
+          placeholder: "Search for module",
           value: this.state.value,
-          onChange: this.handleChange,
+          onChange: this.handleChange
         }}
       />
     );
@@ -166,27 +166,27 @@ class IntegrationAutosuggest extends React.Component {
 }
 
 IntegrationAutosuggest.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 function makeSuggestions(modules) {
-  return modules.map((module) => {
-    return { label: module.name, id: module.id, module }
-  })
+  return modules.map(module => {
+    return { label: module.name, id: module.id, module };
+  });
 }
 
-const ModuleSearchWrapper = (props) => {
-    return (
-      <StoreContext.Consumer>
-        { ({ modules, onModuleChange }) => (
-            <IntegrationAutosuggest
-              {...props}
-              modules={makeSuggestions(modules)}
-              onSuggestionSelected={onModuleChange}
-            /> 
-        )}
-      </StoreContext.Consumer>
-    )
-}
+const ModuleSearchWrapper = props => {
+  return (
+    <StoreContext.Consumer>
+      {({ modules, onModuleChange }) => (
+        <IntegrationAutosuggest
+          {...props}
+          modules={makeSuggestions(modules)}
+          onSuggestionSelected={onModuleChange}
+        />
+      )}
+    </StoreContext.Consumer>
+  );
+};
 
 export default withStyles(styles)(ModuleSearchWrapper);

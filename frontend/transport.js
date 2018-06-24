@@ -1,6 +1,6 @@
-const STATS_URL = '/stats';
+const STATS_URL = "/stats";
 
 export async function loadStatsData() {
-    const resp = await fetch(STATS_URL);
-    return resp.json();
+  const resp = await fetch(STATS_URL);
+  return resp.json();
 }
