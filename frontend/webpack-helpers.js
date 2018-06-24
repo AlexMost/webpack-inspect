@@ -42,3 +42,20 @@ export function getModulesPrefixes(modules, clusterMap) {
     });
     return Array.from(prefixSet);
 }
+
+function maxStr(strs) {
+    let result = '';
+    strs.forEach((str) => {
+        if (result.length < str.length) {
+            result = str;
+        }
+    })
+    return result;
+}
+
+export function getShortLabel(name, prefixes) {
+    const matchPrefixes = prefixes.filter((p) => name.startsWith(p));
+    if (!matchPrefixes) return name;
+    const prefix = maxStr(matchPrefixes);
+    return name.replace(new RegExp(`^${prefix}`), '');
+}

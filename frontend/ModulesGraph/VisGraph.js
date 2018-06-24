@@ -1,13 +1,25 @@
 import React from "react";
 import { getModulesMap } from "../webpack-helpers.js";
 
-function createNode(mod, level, color = 'gray') {
+function createNode(mod, level) {
     return {
         id: mod.id,
         label: mod.id.toString(),
         title: mod.name,
-        color,
-        level
+        color: 'gray',
+        level,
+        shape: 'circle',
+    }
+}
+
+function createMainNode(mod, level) {
+    return {
+        id: mod.id,
+        label: mod.label,
+        title: mod.name,
+        color: 'red',
+        level,
+        shape: 'dot',
     }
 }
 
@@ -100,7 +112,11 @@ function renderGraph({ modules, moduleId, onNodeClick, onDrawEnd, onDrawStart })
         if (!visited.has(node.id)) {
 
             visited.add(node.id);
-            nodes.push(createNode(node, level, node.id === moduleId ? 'red' : 'gray'));
+
+            nodes.push(node.id === moduleId ?
+                createMainNode(node, level) :
+                createNode(node, level)
+            );
 
             node
                 .reasons

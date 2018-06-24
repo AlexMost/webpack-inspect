@@ -7,13 +7,16 @@ const SidebarComponent = (props) => {
     if (!module) return null;
     return (
         <React.Fragment>
-            <Typography align="left" variant="title">{module.name}</Typography>
+            <Typography align="left" variant="title">{module.label}</Typography>
             <Typography align="left" variant="subheading">
                 {module.reasons.length} Reasons:
             </Typography>
             <ul>
                 {module.reasons.map((reason) => {
-                    return <li key={reason.module}><Typography align="left">{reason.module}</Typography></li>
+                    return (
+                        <li key={reason.module + reason.loc}>
+                            <Typography align="left">{reason.module}</Typography>
+                        </li>)
                 })}
             </ul>
         </React.Fragment>

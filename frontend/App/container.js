@@ -3,19 +3,19 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { StoreContext } from "../store";
 import { loadStatsData } from "../transport";
 import { getClusterMap } from "../clusterize";
-import { getModulesPrefixes } from "../webpack-helpers";
+import { getModulesPrefixes, getShortLabel } from "../webpack-helpers";
 
 function makeModules(statsData) {
   const clusterMap = getClusterMap(statsData.modules);
   const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
   
   // TODO: implement module short name
-  console.log(prefixes);
   return statsData.modules.map((module) => {
     return {
       id: module.id,
       name: module.name,
-      reasons: module.reasons
+      reasons: module.reasons,
+      label: getShortLabel(module.name, prefixes),
     }
   })
 }
