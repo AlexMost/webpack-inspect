@@ -37,7 +37,7 @@ class LayoutComponent extends React.Component {
             })}
           >
             <Toolbar>
-              <ModuleSearch onModuleSelected={this.handleDrawerOpen} />
+              <ModuleSearch />
             </Toolbar>
           </AppBar>
           <main

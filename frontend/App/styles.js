@@ -39,7 +39,7 @@ export const styles = theme => ({
     position: "relative",
     width: drawerWidth,
     overflow: "hidden",
-    height: "100%"
+    height: "100vh"
   },
   drawerHeader: {
     display: "flex",

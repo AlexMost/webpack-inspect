@@ -145,7 +145,7 @@ function renderGraph({
 
 function createMarkup() {
   return {
-    __html: '<div id="graph-container" style="height:100vh"></div>'
+    __html: '<div id="graph-container" style="height:100%"></div>'
   };
 }
 
@@ -160,6 +160,11 @@ export class VisGraph extends React.Component {
     return nextProps.moduleId !== this.props.moduleId;
   }
   render() {
-    return <div dangerouslySetInnerHTML={createMarkup()} />;
+    return (
+      <div
+        style={{ height: "100%" }}
+        dangerouslySetInnerHTML={createMarkup()}
+      />
+    );
   }
 }
