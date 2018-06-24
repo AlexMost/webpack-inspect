@@ -1,15 +1,9 @@
-const drawerWidth = "30vw";
-
 export const styles = theme => ({
-    drawerPaper: {
-        position: 'relative',
-        width: drawerWidth,
-        overflow: "hidden",
-        height: "100vh"
+    sidebarRoot: {
+        padding: "10px",
+        'overflow-y': "scroll",
     },
-    drawerHeader: {
-        alignItems: 'center',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
+    listItemCaption: {
+        'word-wrap': "break-word"
     }
 });

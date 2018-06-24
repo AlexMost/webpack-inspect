@@ -1,27 +1,42 @@
 import React from "react";
 import { StoreContext } from "../store";
 import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import { styles } from "./styles";
 
-const SidebarComponent = (props) => {
+const SidebarComponent = withStyles(styles)((props) => {
     const module = props.modules.find((m) => m.id === props.selectedModuleId);
+    const { sidebarRoot, listItemCaption } = props.classes;
     if (!module) return null;
     return (
-        <React.Fragment>
-            <Typography align="left" variant="title">{module.label}</Typography>
-            <Typography align="left" variant="subheading">
-                {module.reasons.length} Reasons:
+        <div className={sidebarRoot}>
+            <Typography align="center" gutterBottom noWrap variant="title">
+                {module.label}
             </Typography>
-            <ul>
+            <List disablePadding>
+                <ListSubheader disableSticky>{module.reasons.length} Reasons:</ListSubheader>
                 {module.reasons.map((reason) => {
+                    const module = props.modules.find((m) => m.id === reason.moduleId);
                     return (
-                        <li key={reason.module + reason.loc}>
-                            <Typography align="left">{reason.module}</Typography>
-                        </li>)
+                        <ListItem key={reason.module + reason.loc} divider>
+                            <ListItemText>
+                                <Typography noWrap>{module.label}</Typography>
+                                <Typography
+                                    className={listItemCaption}
+                                    variant="caption">
+                                        {module.name}
+                                </Typography>
+                            </ListItemText>
+                        </ListItem>)
                 })}
-            </ul>
-        </React.Fragment>
+            </List>
+        </div>
     )
-};
+});
 
 const Sidebar = () => {
     return (

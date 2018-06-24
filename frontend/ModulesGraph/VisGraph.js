@@ -108,7 +108,8 @@ function renderGraph({ modules, moduleId, onNodeClick, onDrawEnd, onDrawStart })
     const visited = new Set();
 
     function walk(node, level = 0) {
-        if (level > 2) return;
+        // TODO: think about level restriction
+        // if (level > 2) return;
         if (!visited.has(node.id)) {
 
             visited.add(node.id);

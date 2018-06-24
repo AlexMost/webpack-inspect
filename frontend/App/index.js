@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import Divider from '@material-ui/core/Divider';
 import { AppContainer } from "./container";
 import { GraphToolbar } from "../GraphToolbar";
 import { ModulesGraph } from "../ModulesGraph/index";
@@ -26,8 +25,6 @@ const AppComponent = (props) => {
             paper: classes.drawerPaper,
           }}
         >
-          <div className={classes.drawerHeader}></div>
-          <Divider />
           <Sidebar />
         </Drawer>
       </div>
