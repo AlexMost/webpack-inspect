@@ -1,17 +1,19 @@
 import React from "react";
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import { AppContainer } from "./container";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { GraphToolbar } from "../GraphToolbar";
 import { ModulesGraph } from "../ModulesGraph/index";
 import Sidebar from "../Sidebar/index";
 import { styles } from "./styles";
+import StoreComponent from "../Store/StoreComponent";
 
 
 const AppComponent = (props) => {
   const { classes } = props;
   return (
-    <AppContainer>
+    <StoreComponent>
+      <CssBaseline/>
       <div className={classes.root}>
         <GraphToolbar title="Deps inspector" />
         <main className={classes.content}>
@@ -28,7 +30,7 @@ const AppComponent = (props) => {
           <Sidebar />
         </Drawer>
       </div>
-    </AppContainer>
+    </StoreComponent>
   );
 }
 

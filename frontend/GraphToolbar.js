@@ -5,7 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import ModuleSearch from "./ModuleSearch";
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { StoreContext } from "./store";
+import { StoreContext } from "./Store";
 
 const styles = {
   toolbar: {

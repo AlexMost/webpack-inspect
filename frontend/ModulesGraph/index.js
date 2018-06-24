@@ -1,5 +1,5 @@
 import React from "react";
-import { StoreContext } from "../store";
+import { StoreContext } from "../Store";
 import { VisGraph } from "./VisGraph";
 
 

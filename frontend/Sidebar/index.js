@@ -1,5 +1,5 @@
 import React from "react";
-import { StoreContext } from "../store";
+import { StoreContext } from "../Store";
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';

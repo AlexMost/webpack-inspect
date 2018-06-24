@@ -1,6 +1,5 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { StoreContext } from "../store";
+import { StoreContext } from "./index";
 import { loadStatsData } from "../transport";
 import { getClusterMap } from "../clusterize";
 import { getModulesPrefixes, getShortLabel } from "../webpack-helpers";
@@ -20,7 +19,7 @@ function makeModules(statsData) {
   })
 }
 
-export class AppContainer extends React.Component {
+export default class StoreComponent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,7 +59,6 @@ export class AppContainer extends React.Component {
   render() {
     return (
       <StoreContext.Provider value={this.state}>
-        <CssBaseline />
         {this.props.children}
       </StoreContext.Provider>
     );
