@@ -182,7 +182,10 @@ const ModuleSearchWrapper = props => {
         <IntegrationAutosuggest
           {...props}
           modules={makeSuggestions(modules)}
-          onSuggestionSelected={onModuleChange}
+          onSuggestionSelected={args => {
+            onModuleChange(args);
+            props.onModuleSelected(args);
+          }}
         />
       )}
     </StoreContext.Consumer>
