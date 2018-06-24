@@ -67,7 +67,7 @@ function createEdge(modFrom, modTo) {
 //     })
 // }
 
-function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }) {
+function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts) {
   console.log(
     `Rendering graph: nodes - ${nodes.length}; edges - ${edges.length}`
   );
@@ -80,6 +80,8 @@ function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }) {
     nodes: {
       shape: "circle"
     },
+    width: `${opts.width}px`,
+    height: `${opts.height}px`,
     layout: {
       hierarchical: {
         direction: "DU",
@@ -102,13 +104,10 @@ function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }) {
   });
 }
 
-function renderGraph({
-  modules,
-  moduleId,
-  onNodeClick,
-  onDrawEnd,
-  onDrawStart
-}) {
+function renderGraph(
+  { modules, moduleId, onNodeClick, onDrawEnd, onDrawStart },
+  opts
+) {
   onDrawStart();
   const modulesMap = getModulesMap(modules);
   const nodes = [];
@@ -140,21 +139,29 @@ function renderGraph({
   }
 
   walk(modulesMap[moduleId]);
-  drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd });
+  drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts);
 }
 
 function createMarkup() {
   return {
-    __html: '<div id="graph-container" style="height:100%"></div>'
+    __html: '<div id="graph-container" style="height:100%;flex-grow: 1"></div>'
   };
 }
 
 export class VisGraph extends React.Component {
+  constructor(props) {
+    super(props);
+    this.container = React.createRef();
+  }
   componentDidMount() {
-    renderGraph(this.props);
+    const container = this.container.current;
+    const rect = container.getBoundingClientRect();
+    renderGraph(this.props, { width: rect.width, height: rect.height });
   }
   componentDidUpdate() {
-    renderGraph(this.props);
+    const container = this.container.current;
+    const rect = container.getBoundingClientRect();
+    renderGraph(this.props, { width: rect.width, height: rect.height });
   }
   shouldComponentUpdate(nextProps) {
     return nextProps.moduleId !== this.props.moduleId;
@@ -162,7 +169,8 @@ export class VisGraph extends React.Component {
   render() {
     return (
       <div
-        style={{ height: "100%" }}
+        ref={this.container}
+        style={{ flexGrow: 1 }}
         dangerouslySetInnerHTML={createMarkup()}
       />
     );
