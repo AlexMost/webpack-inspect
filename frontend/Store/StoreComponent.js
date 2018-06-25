@@ -41,7 +41,12 @@ export default class StoreComponent extends React.Component {
 
     const onStatsDataLoaded = statsData => {
       const modules = makeModules(statsData);
-      this.setState({ statsData, modules });
+      this.setState({
+        statsData,
+        modules,
+        moduleId: null,
+        selectedModuleId: null
+      });
     };
 
     this.state = {
@@ -56,10 +61,7 @@ export default class StoreComponent extends React.Component {
       onStatsDataLoaded
     };
   }
-  async componentDidMount() {
-    const { stats: statsData } = await loadStatsData();
-    this.state.onStatsDataLoaded(statsData);
-  }
+
   render() {
     return (
       <StoreContext.Provider value={this.state}>

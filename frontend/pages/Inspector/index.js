@@ -1,12 +1,18 @@
 import React from "react";
+import { withRouter, Redirect } from "react-router-dom";
 import { StoreContext } from "../../Store";
 import InspectorComponent from "./component";
 
-
-export const Inspector = (props) => {
+export const Inspector = withRouter(props => {
   return (
     <StoreContext.Consumer>
-      {ctx => <InspectorComponent open={Boolean(ctx.moduleId)} {...props} />}
+      {ctx =>
+        ctx.modules.length ? (
+          <InspectorComponent open={Boolean(ctx.moduleId)} {...props} />
+        ) : (
+          <Redirect to="/" />
+        )
+      }
     </StoreContext.Consumer>
   );
-};
+});

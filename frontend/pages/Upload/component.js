@@ -2,6 +2,10 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import FileUpload from "@material-ui/icons/FileUpload";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Typography from "@material-ui/core/Typography";
 
 import { styles } from "./styles";
 
@@ -28,24 +32,39 @@ class UploadComponent extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <input
-          accept=".json"
-          className={classes.input}
-          id="button-file"
-          onChange={this.handleFileUpload}
-          type="file"
-        />
-        <label htmlFor="button-file">
-          <Button
-            variant="contained"
-            component="span"
-            className={classes.button}
+      <div className={classes.root}>
+        <div className={classes.uploadCard}>
+          <Typography align="center" variant="headline">
+            Please, upload your stats.json data
+          </Typography>
+          <Typography
+            align="center"
+            variant="caption"
+            color="textSecondary"
+            paragraph
           >
-            Upload
-            <FileUpload className={classes.rightIcon} />
-          </Button>
-        </label>
+            webpack --profile --json > stats.json
+          </Typography>
+          <div className={classes.actions}>
+            <input
+              accept=".json"
+              className={classes.input}
+              id="button-file"
+              onChange={this.handleFileUpload}
+              type="file"
+            />
+            <label htmlFor="button-file">
+              <Button
+                color="primary"
+                variant="fab"
+                component="span"
+                className={classes.button}
+              >
+                <FileUpload />
+              </Button>
+            </label>
+          </div>
+        </div>
       </div>
     );
   }
