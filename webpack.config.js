@@ -1,12 +1,16 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = () => {
   return {
     entry: "./frontend/entry.js",
     output: {
       path: path.resolve(__dirname, "dist"),
-      filename: "app.js"
+      filename: "[name].[chunkhash].js"
     },
+    devtool: "inline-source-map",
     module: {
       rules: [
         {
@@ -16,8 +20,32 @@ module.exports = () => {
         }
       ]
     },
+    devServer: {
+      contentBase: "./dist",
+      compress: false,
+      historyApiFallback: true
+    },
     resolve: {
       extensions: ["*", ".js", ".jsx"]
-    }
+    },
+    optimization: {
+      runtimeChunk: "single",
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            chunks: "all"
+          }
+        }
+      }
+    },
+    plugins: [
+      new CleanWebpackPlugin(["dist"]),
+      new webpack.HashedModuleIdsPlugin(),
+      new HtmlWebpackPlugin({
+        title: "Webpack inspect"
+      })
+    ]
   };
 };

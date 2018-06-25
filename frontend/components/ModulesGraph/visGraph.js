@@ -1,3 +1,4 @@
+import vis from "vis";
 import { getModulesMap } from "../../lib/webpack-helpers";
 
 function createNode(mod, level) {
