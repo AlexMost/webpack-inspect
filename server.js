@@ -10,6 +10,9 @@ function start(statsPath) {
   app.get("/", function(req, res) {
     res.send(html({ title: `Dependency graph` }));
   });
+  app.get("/inspect", function(req, res) {
+    res.send(html({ title: `Dependency graph` }));
+  });
 
   app.get("/stats", (req, res) => {
     const statsData = JSON.parse(fs.readFileSync(statsPath));

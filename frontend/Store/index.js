@@ -9,5 +9,6 @@ export const StoreContext = React.createContext({
   onSelectModule: () => {},
   onDrawStart: () => {},
   onDrawEnd: () => {},
+  onStatsDataLoaded: () => {},
   isDrawing: false
 });

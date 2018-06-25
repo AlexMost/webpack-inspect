@@ -39,6 +39,11 @@ export default class StoreComponent extends React.Component {
       this.setState({ isDrawing: false });
     };
 
+    const onStatsDataLoaded = statsData => {
+      const modules = makeModules(statsData);
+      this.setState({ statsData, modules });
+    };
+
     this.state = {
       modules: [],
       moduleId: null,
@@ -47,13 +52,13 @@ export default class StoreComponent extends React.Component {
       onModuleChange,
       onSelectModule,
       onDrawStart,
-      onDrawEnd
+      onDrawEnd,
+      onStatsDataLoaded
     };
   }
   async componentDidMount() {
     const { stats: statsData } = await loadStatsData();
-    const modules = makeModules(statsData);
-    this.setState({ statsData, modules });
+    this.state.onStatsDataLoaded(statsData);
   }
   render() {
     return (
