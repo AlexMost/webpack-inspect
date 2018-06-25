@@ -1,13 +1,13 @@
 import React from "react";
-import { StoreContext } from "../Store";
-import { VisGraph } from "./VisGraph";
+import { StoreContext } from "../../Store";
+import ModulesGraphComponent from "./component";
 
 export const ModulesGraph = () => {
   return (
     <StoreContext.Consumer>
       {ctx => {
         return ctx.moduleId ? (
-          <VisGraph
+          <ModulesGraphComponent
             modules={ctx.modules}
             moduleId={ctx.moduleId}
             selectedAsset={ctx.selectedAsset}

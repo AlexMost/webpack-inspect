@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
-import { StoreContext } from "./Store";
+import { StoreContext } from "../Store";
 
 function renderInput(inputProps) {
   const { classes, ref, ...other } = inputProps;

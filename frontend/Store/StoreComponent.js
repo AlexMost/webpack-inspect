@@ -1,8 +1,8 @@
 import React from "react";
 import { StoreContext } from "./index";
-import { loadStatsData } from "../transport";
-import { getClusterMap } from "../clusterize";
-import { getModulesPrefixes, getShortLabel } from "../webpack-helpers";
+import { loadStatsData } from "../lib/transport";
+import { getClusterMap } from "../lib/clusterize";
+import { getModulesPrefixes, getShortLabel } from "../lib/webpack-helpers";
 
 function makeModules(statsData) {
   const clusterMap = getClusterMap(statsData.modules);

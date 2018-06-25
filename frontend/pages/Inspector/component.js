@@ -6,24 +6,14 @@ import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import MenuItem from "@material-ui/core/MenuItem";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
-import { ModulesGraph } from "../ModulesGraph/index";
-import ModuleSearch from "../ModuleSearch";
-import Sidebar from "../Sidebar/index";
-import { StoreContext } from "../Store";
-import { DrawingProgress } from "../ModulesGraph/DrawingProgress";
+import { ModulesGraph } from "../../components/ModulesGraph/index";
+import ModuleSearch from "../../components/ModuleSearch";
+import Sidebar from "../../components/Sidebar/index";
+import { DrawingProgress } from "../../components/DrawingProgress";
 import { styles } from "./styles";
 
-class LayoutComponent extends React.Component {
+class InspectorComponent extends React.Component {
   render() {
     const { classes, open } = this.props;
 
@@ -66,16 +56,10 @@ class LayoutComponent extends React.Component {
   }
 }
 
-LayoutComponent.propTypes = {
+InspectorComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   open: PropTypes.bool
 };
 
-export const Layout = withStyles(styles, { withTheme: true })(props => {
-  return (
-    <StoreContext.Consumer>
-      {ctx => <LayoutComponent open={Boolean(ctx.moduleId)} {...props} />}
-    </StoreContext.Consumer>
-  );
-});
+export default withStyles(styles, { withTheme: true })(InspectorComponent);

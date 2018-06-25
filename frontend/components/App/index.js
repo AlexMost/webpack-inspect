@@ -1,14 +1,13 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import StoreComponent from "../Store/StoreComponent";
-import { Layout } from "./layout";
+import StoreComponent from "../../Store/StoreComponent";
+import { Inspector } from "../../pages/Inspector/index";
 
-export const App = props => {
-  const { classes } = props;
+export const App = () => {
   return (
     <StoreComponent>
       <CssBaseline />
-      <Layout />
+      <Inspector />
     </StoreComponent>
   );
 };

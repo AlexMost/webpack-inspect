@@ -1,5 +1,4 @@
 import React from "react";
-import { StoreContext } from "../Store";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -39,17 +38,4 @@ const SidebarComponent = withStyles(styles)(props => {
   );
 });
 
-const Sidebar = () => {
-  return (
-    <StoreContext.Consumer>
-      {ctx => (
-        <SidebarComponent
-          modules={ctx.modules || []}
-          selectedModuleId={ctx.selectedModuleId}
-        />
-      )}
-    </StoreContext.Consumer>
-  );
-};
-
-export default Sidebar;
+export default SidebarComponent

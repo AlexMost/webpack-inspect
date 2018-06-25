@@ -1,5 +1,4 @@
-import React from "react";
-import { getModulesMap } from "../webpack-helpers.js";
+import { getModulesMap } from "../../lib/webpack-helpers";
 
 function createNode(mod, level) {
   return {
@@ -104,7 +103,7 @@ function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts) {
   });
 }
 
-function renderGraph(
+export function renderGraph(
   { modules, moduleId, onNodeClick, onDrawEnd, onDrawStart },
   opts
 ) {
@@ -140,39 +139,4 @@ function renderGraph(
 
   walk(modulesMap[moduleId]);
   drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts);
-}
-
-function createMarkup() {
-  return {
-    __html: '<div id="graph-container" style="height:100%;flex-grow: 1"></div>'
-  };
-}
-
-export class VisGraph extends React.Component {
-  constructor(props) {
-    super(props);
-    this.container = React.createRef();
-  }
-  componentDidMount() {
-    const container = this.container.current;
-    const rect = container.getBoundingClientRect();
-    renderGraph(this.props, { width: rect.width, height: rect.height });
-  }
-  componentDidUpdate() {
-    const container = this.container.current;
-    const rect = container.getBoundingClientRect();
-    renderGraph(this.props, { width: rect.width, height: rect.height });
-  }
-  shouldComponentUpdate(nextProps) {
-    return nextProps.moduleId !== this.props.moduleId;
-  }
-  render() {
-    return (
-      <div
-        ref={this.container}
-        style={{ flexGrow: 1 }}
-        dangerouslySetInnerHTML={createMarkup()}
-      />
-    );
-  }
 }
