@@ -156,7 +156,7 @@ class IntegrationAutosuggest extends React.Component {
         renderSuggestion={renderSuggestion}
         inputProps={{
           classes,
-          placeholder: "Search for module",
+          placeholder: "Search and select module",
           value: this.state.value,
           onChange: this.handleChange
         }}

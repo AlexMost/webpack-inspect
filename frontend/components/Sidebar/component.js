@@ -38,4 +38,4 @@ const SidebarComponent = withStyles(styles)(props => {
   );
 });
 
-export default SidebarComponent
+export default SidebarComponent;

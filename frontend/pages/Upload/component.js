@@ -6,6 +6,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 import { styles } from "./styles";
 
@@ -21,10 +22,16 @@ function readFile(file, cb) {
 }
 
 class UploadComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { uploading: false };
+  }
   handleFileUpload = ev => {
+    this.setState({ uploading: true });
     if (ev.target.files !== null) {
       readFile(ev.target.files[0], statsData => {
         this.props.onStatsUploaded(statsData);
+        this.setState({ uploading: false });
       });
     }
   };
@@ -33,7 +40,7 @@ class UploadComponent extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <div className={classes.uploadCard}>
+        <div>
           <Typography align="center" variant="headline">
             Please, upload your stats.json data
           </Typography>
@@ -57,6 +64,7 @@ class UploadComponent extends React.Component {
               <Button
                 color="primary"
                 variant="fab"
+                disabled={this.state.uploading}
                 component="span"
                 className={classes.button}
               >
@@ -64,6 +72,7 @@ class UploadComponent extends React.Component {
               </Button>
             </label>
           </div>
+          {this.state.uploading ? <LinearProgress /> : null}
         </div>
       </div>
     );

@@ -11,12 +11,10 @@ export const styles = theme => ({
     alignItems: "center",
     height: "100vh"
   },
-  uploadCard: {
-    width: "50vw",
-    padding: "30px"
-  },
   actions: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 2
   }
 });
