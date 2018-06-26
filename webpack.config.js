@@ -2,8 +2,8 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require("webpack");
-const { homepage } = require("./package.json");
-const publicUrl = process.env.NODE_ENV === "production" ? homepage : "/";
+const { basename } = require("./package.json");
+const BASENAME = process.env.NODE_ENV === "production" ? basename : "/";
 
 module.exports = () => {
   return {
@@ -53,7 +53,7 @@ module.exports = () => {
         filename: "inspect/index.html"
       }),
       new webpack.DefinePlugin({
-        PUBLIC_URL: JSON.stringify(publicUrl)
+        BASENAME: JSON.stringify(BASENAME)
       })
     ]
   };

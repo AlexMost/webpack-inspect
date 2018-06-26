@@ -48,7 +48,7 @@
     "webpack-cli": "^3.0.4",
     "webpack-dev-server": "^3.1.4"
   },
-  "homepage": "https://alexmost.github.io/webpack-deps-inspect/",
+  "basename": "/webpack-deps-inspect",
   "babel": {
     "presets": [
       "react"
