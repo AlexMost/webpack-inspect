@@ -1,7 +1,7 @@
 export function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
-      .register(`${BASENAME}service-worker.js`)
+      .register(`${BASENAME}/service-worker.js`)
       .then(() => {
         console.log("Service worker is registered");
       })
