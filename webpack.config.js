@@ -1,9 +1,14 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
+
 const webpack = require("webpack");
-const { basename } = require("./package.json");
-const BASENAME = process.env.NODE_ENV === "production" ? basename : "/";
+const { basename, publicUrl } = require("./package.json");
+const isProd = process.env.NODE_ENV === "production";
+
+const BASENAME = isProd ? basename : "/";
+const PUBLIC_PATH = isProd ? publicUrl : "http://localhost/";
 
 module.exports = () => {
   return {
@@ -48,12 +53,16 @@ module.exports = () => {
       new HtmlWebpackPlugin({
         title: "Webpack inspect"
       }),
-      new HtmlWebpackPlugin({
-        title: "Webpack inspect",
-        filename: "inspect/index.html"
-      }),
       new webpack.DefinePlugin({
         BASENAME: JSON.stringify(BASENAME)
+      }),
+      new SWPrecacheWebpackPlugin({
+        cacheId: "webpack-inspect",
+        dontCacheBustUrlsMatching: /\.\w{8}\./,
+        filename: "service-worker.js",
+        minify: isProd,
+        navigateFallback: PUBLIC_PATH + "index.html",
+        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
       })
     ]
   };
