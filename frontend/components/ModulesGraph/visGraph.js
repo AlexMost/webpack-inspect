@@ -102,6 +102,7 @@ function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts) {
   network.on("afterDrawing", function(args) {
     onDrawEnd();
   });
+  return network;
 }
 
 export function renderGraph(
@@ -139,5 +140,5 @@ export function renderGraph(
   }
 
   walk(modulesMap[moduleId]);
-  drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts);
+  return drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts);
 }

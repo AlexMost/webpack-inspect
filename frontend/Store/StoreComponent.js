@@ -49,6 +49,10 @@ export default class StoreComponent extends React.Component {
       });
     };
 
+    const onReasonSelect = moduleId => {
+      this.setState({ focusModule: moduleId });
+    };
+
     this.state = {
       modules: [],
       moduleId: null,
@@ -58,7 +62,8 @@ export default class StoreComponent extends React.Component {
       onSelectModule,
       onDrawStart,
       onDrawEnd,
-      onStatsDataLoaded
+      onStatsDataLoaded,
+      onReasonSelect
     };
   }
 

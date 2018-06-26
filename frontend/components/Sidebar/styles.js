@@ -5,5 +5,8 @@ export const styles = theme => ({
   },
   listItemCaption: {
     "word-wrap": "break-word"
+  },
+  reasonLabel: {
+    cursor: "pointer"
   }
 });

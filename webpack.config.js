@@ -56,7 +56,8 @@ module.exports = () => {
         title: "Webpack inspect"
       }),
       new webpack.DefinePlugin({
-        BASENAME: JSON.stringify(BASENAME)
+        BASENAME: JSON.stringify(BASENAME),
+        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
       }),
       new SWPrecacheWebpackPlugin({
         cacheId: "webpack-inspect",

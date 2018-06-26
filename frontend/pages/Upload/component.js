@@ -30,8 +30,8 @@ class UploadComponent extends React.Component {
     this.setState({ uploading: true });
     if (ev.target.files !== null) {
       readFile(ev.target.files[0], statsData => {
-        this.props.onStatsUploaded(statsData);
         this.setState({ uploading: false });
+        this.props.onStatsUploaded(statsData);
       });
     }
   };

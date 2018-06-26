@@ -11,20 +11,30 @@ export default class ModulesGraphComponent extends React.Component {
   constructor(props) {
     super(props);
     this.container = React.createRef();
+    this.network = null;
   }
+
+  renderGraph = () => {
+    const container = this.container.current;
+    const rect = container.getBoundingClientRect();
+    this.network = renderGraph(this.props, {
+      width: rect.width,
+      height: rect.height
+    });
+  };
+
   componentDidMount() {
-    const container = this.container.current;
-    const rect = container.getBoundingClientRect();
-    renderGraph(this.props, { width: rect.width, height: rect.height });
+    this.renderGraph();
   }
+
   componentDidUpdate() {
-    const container = this.container.current;
-    const rect = container.getBoundingClientRect();
-    renderGraph(this.props, { width: rect.width, height: rect.height });
+    this.renderGraph();
   }
+
   shouldComponentUpdate(nextProps) {
     return nextProps.moduleId !== this.props.moduleId;
   }
+
   render() {
     return (
       <div

@@ -9,6 +9,7 @@ const Sidebar = () => {
         <SidebarComponent
           modules={ctx.modules || []}
           selectedModuleId={ctx.selectedModuleId}
+          onReasonSelect={ctx.onReasonSelect}
         />
       )}
     </StoreContext.Consumer>

@@ -9,7 +9,7 @@ import { styles } from "./styles";
 
 const SidebarComponent = withStyles(styles)(props => {
   const module = props.modules.find(m => m.id === props.selectedModuleId);
-  const { sidebarRoot, listItemCaption } = props.classes;
+  const { sidebarRoot, listItemCaption, reasonLabel } = props.classes;
   if (!module) return null;
   return (
     <div className={sidebarRoot}>
@@ -25,7 +25,9 @@ const SidebarComponent = withStyles(styles)(props => {
           return (
             <ListItem key={reason.module + reason.loc} divider>
               <ListItemText>
-                <Typography noWrap>{module.label}</Typography>
+                <Typography className={reasonLabel} noWrap>
+                  {module.label}
+                </Typography>
                 <Typography className={listItemCaption} variant="caption">
                   {module.name}
                 </Typography>

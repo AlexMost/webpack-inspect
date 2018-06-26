@@ -1,5 +1,5 @@
 export function registerServiceWorker() {
-  if ("serviceWorker" in navigator) {
+  if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
     navigator.serviceWorker
       .register(`${BASENAME}/service-worker.js`)
       .then(() => {
