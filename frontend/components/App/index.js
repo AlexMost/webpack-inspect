@@ -13,7 +13,7 @@ export const App = () => {
   return (
     <StoreComponent>
       <CssBaseline />
-      <Router>
+      <Router basename={PUBLIC_URL}>
         <Switch>
           <Route exact path="/" component={Upload} />
           <Route path="/inspect" component={Inspector} />
