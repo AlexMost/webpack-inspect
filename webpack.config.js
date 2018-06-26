@@ -8,14 +8,15 @@ const { basename, publicUrl } = require("./package.json");
 const isProd = process.env.NODE_ENV === "production";
 
 const BASENAME = isProd ? basename : "/";
-const PUBLIC_PATH = isProd ? publicUrl : "http://localhost/";
+const PUBLIC_PATH = isProd ? publicUrl : "http://localhost:8080/";
 
 module.exports = () => {
   return {
     entry: "./frontend/entry.js",
     output: {
       path: path.resolve(__dirname, "dist"),
-      filename: "[name].[chunkhash].js"
+      filename: "[name].[chunkhash].js",
+      chunkFilename: "[name].[chunkhash].js"
     },
     devtool: "inline-source-map",
     module: {
@@ -38,6 +39,7 @@ module.exports = () => {
     optimization: {
       runtimeChunk: "single",
       splitChunks: {
+        minChunks: 2,
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,

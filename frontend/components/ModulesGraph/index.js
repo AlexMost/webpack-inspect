@@ -1,13 +1,18 @@
 import React from "react";
 import { StoreContext } from "../../Store";
-import ModulesGraphComponent from "./component";
+import { asyncComponent } from "react-async-component";
+
+const AsyncModulesGraphComponent = asyncComponent({
+  resolve: () =>
+    import(/* webpackPrefetch: true, webpackChunkName: "ModulesGraph" */ "./component")
+});
 
 export const ModulesGraph = () => {
   return (
     <StoreContext.Consumer>
       {ctx => {
         return ctx.moduleId ? (
-          <ModulesGraphComponent
+          <AsyncModulesGraphComponent
             modules={ctx.modules}
             moduleId={ctx.moduleId}
             selectedAsset={ctx.selectedAsset}

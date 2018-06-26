@@ -3,7 +3,7 @@ import { withRouter, Redirect } from "react-router-dom";
 import { StoreContext } from "../../Store";
 import InspectorComponent from "./component";
 
-export const Inspector = withRouter(props => {
+export default withRouter(props => {
   return (
     <StoreContext.Consumer>
       {ctx =>
