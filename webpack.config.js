@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require("webpack");
 const { homepage } = require("./package.json");
-const publicUrl = process.env.NODE_ENV === "productoin" ? homepage : "/";
+const publicUrl = process.env.NODE_ENV === "production" ? homepage : "/";
 
 module.exports = () => {
   return {
@@ -47,6 +47,10 @@ module.exports = () => {
       new webpack.HashedModuleIdsPlugin(),
       new HtmlWebpackPlugin({
         title: "Webpack inspect"
+      }),
+      new HtmlWebpackPlugin({
+        title: "Webpack inspect",
+        filename: "inspect/index.html"
       }),
       new webpack.DefinePlugin({
         PUBLIC_URL: JSON.stringify(publicUrl)
