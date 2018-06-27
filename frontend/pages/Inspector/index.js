@@ -8,7 +8,7 @@ export default withRouter(props => {
     <StoreContext.Consumer>
       {ctx =>
         ctx.modules.length ? (
-          <InspectorComponent open={Boolean(ctx.moduleId)} {...props} />
+          <InspectorComponent open={ctx.moduleId !== null} {...props} />
         ) : (
           <Redirect to="/" />
         )

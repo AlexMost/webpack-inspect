@@ -11,7 +11,7 @@ export const ModulesGraph = () => {
   return (
     <StoreContext.Consumer>
       {ctx => {
-        return ctx.moduleId ? (
+        return ctx.moduleId !== null ? (
           <AsyncModulesGraphComponent
             modules={ctx.modules}
             moduleId={ctx.moduleId}
