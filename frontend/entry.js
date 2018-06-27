@@ -8,7 +8,7 @@ document.body.appendChild(container);
 
 function start() {
   console.log("starting application ...");
-  registerServiceWorker();
+  registerServiceWorker(`${PUBLIC_PATH}service-worker.js`);
   ReactDOM.render(<App />, container);
 }
 

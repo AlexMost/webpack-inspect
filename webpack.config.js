@@ -57,6 +57,7 @@ module.exports = () => {
       }),
       new webpack.DefinePlugin({
         BASENAME: JSON.stringify(BASENAME),
+        PUBLIC_PATH: JSON.stringify(PUBLIC_PATH),
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
       }),
       new SWPrecacheWebpackPlugin({
