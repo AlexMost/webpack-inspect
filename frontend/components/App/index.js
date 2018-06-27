@@ -1,7 +1,7 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import StoreComponent from "../../Store/StoreComponent";
-
+import GithubRibbon from "../Github";
 // pages
 import { Inspector } from "../../pages/Inspector/async";
 import { Upload } from "../../pages/Upload/async";

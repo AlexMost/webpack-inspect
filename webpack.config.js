@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
 
 const webpack = require("webpack");
-const { basename, publicUrl } = require("./package.json");
+const { basename, publicUrl, repositoryHome } = require("./package.json");
 const isProd = process.env.NODE_ENV === "production";
 
 const BASENAME = isProd ? basename : "/";
@@ -58,6 +58,7 @@ module.exports = () => {
       new webpack.DefinePlugin({
         BASENAME: JSON.stringify(BASENAME),
         PUBLIC_PATH: JSON.stringify(PUBLIC_PATH),
+        REPOSITORY_HOME: JSON.stringify(repositoryHome),
         "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
       }),
       new SWPrecacheWebpackPlugin({

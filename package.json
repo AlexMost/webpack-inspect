@@ -6,6 +6,7 @@
   "bin": {
     "wpinspect": "./bin/wpinspect"
   },
+  "repositoryHome": "https://github.com/AlexMost/webpack-deps-inspect",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "build": "webpack --mode development",

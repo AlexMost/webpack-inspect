@@ -7,6 +7,7 @@ import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
+import { GithubLink } from "../../components/Github";
 import { ModulesGraph } from "../../components/ModulesGraph/index";
 import ModuleSearch from "../../components/ModuleSearch";
 import Sidebar from "../../components/Sidebar/index";
@@ -28,7 +29,9 @@ class InspectorComponent extends React.Component {
           >
             <Toolbar>
               <ModuleSearch />
+              <GithubLink />
             </Toolbar>
+            <DrawingProgress />
           </AppBar>
           <main
             className={classNames(classes.content, classes["content-right"], {
@@ -37,7 +40,6 @@ class InspectorComponent extends React.Component {
             })}
           >
             <div className={classes.drawerHeader} />
-            <DrawingProgress />
             <ModulesGraph />
           </main>
           <Drawer
