@@ -3,9 +3,6 @@
   "version": "0.0.2",
   "description": "",
   "main": "index.js",
-  "bin": {
-    "wpinspect": "./bin/wpinspect"
-  },
   "repositoryHome": "https://github.com/AlexMost/webpack-inspect",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
@@ -54,7 +51,7 @@
     "webpack-dev-server": "^3.1.4"
   },
   "basename": "/",
-  "publicUrl": "https://alexmost.github.io/webpack-inspect/",
+  "publicUrl": "https://webpack-inspect.js.org/",
   "babel": {
     "presets": [
       "react"
