@@ -50,7 +50,7 @@
     "webpack-cli": "^3.0.4",
     "webpack-dev-server": "^3.1.4"
   },
-  "basename": "/",
+  "basename": "https://webpack-inspect.js.org/",
   "publicUrl": "https://webpack-inspect.js.org/",
   "babel": {
     "presets": [

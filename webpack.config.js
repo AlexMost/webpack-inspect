@@ -66,7 +66,7 @@ module.exports = () => {
         cacheId: "webpack-inspect",
         dontCacheBustUrlsMatching: /\.\w{8}\./,
         filename: "service-worker.js",
-        minify: isProd,
+        minify: true,
         navigateFallback: PUBLIC_PATH + "index.html",
         staticFileGlobsIgnorePatterns: [
           /\.map$/,
