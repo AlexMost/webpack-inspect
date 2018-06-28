@@ -2,6 +2,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const webpack = require("webpack");
 const { basename, publicUrl, repositoryHome } = require("./package.json");
@@ -68,7 +69,8 @@ module.exports = () => {
         minify: isProd,
         navigateFallback: PUBLIC_PATH + "index.html",
         staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
-      })
+      }),
+      new CopyWebpackPlugin(["./CNAME", "./favicon.ico"])
     ]
   };
 };
