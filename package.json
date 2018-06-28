@@ -1,12 +1,12 @@
 {
-  "name": "webpack-deps-inspect",
+  "name": "webpack-inspect",
   "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "bin": {
     "wpinspect": "./bin/wpinspect"
   },
-  "repositoryHome": "https://github.com/AlexMost/webpack-deps-inspect",
+  "repositoryHome": "https://github.com/AlexMost/webpack-inspect",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "build": "webpack --mode development",
@@ -52,8 +52,8 @@
     "webpack-cli": "^3.0.4",
     "webpack-dev-server": "^3.1.4"
   },
-  "basename": "/webpack-deps-inspect",
-  "publicUrl": "https://alexmost.github.io/webpack-deps-inspect/",
+  "basename": "/webpack-inspect",
+  "publicUrl": "https://alexmost.github.io/webpack-inspect/",
   "babel": {
     "presets": [
       "react"

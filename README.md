@@ -1,3 +1,3 @@
-# webpack-deps-inspect
+# webpack-inspect
 
 ## status: WIP
