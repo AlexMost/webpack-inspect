@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 const webpack = require("webpack");
 const { basename, publicUrl, repositoryHome } = require("./package.json");
@@ -39,6 +40,19 @@ module.exports = () => {
     },
     optimization: {
       runtimeChunk: "single",
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          uglifyOptions: {
+            compress: true,
+            ecma: 6,
+            mangle: {
+              safari10: true
+            }
+          }
+        })
+      ],
       splitChunks: {
         minChunks: 2,
         cacheGroups: {
