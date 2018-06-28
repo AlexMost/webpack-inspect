@@ -68,7 +68,11 @@ module.exports = () => {
         filename: "service-worker.js",
         minify: isProd,
         navigateFallback: PUBLIC_PATH + "index.html",
-        staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
+        staticFileGlobsIgnorePatterns: [
+          /\.map$/,
+          /asset-manifest\.json$/,
+          /CNAME/
+        ]
       }),
       new CopyWebpackPlugin(["./CNAME", "./favicon.ico"])
     ]
