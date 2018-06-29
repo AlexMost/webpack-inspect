@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
-import { StoreContext } from "../Store";
+import { styles } from "./styles";
 
 function renderInput(inputProps) {
   const { classes, ref, ...other } = inputProps;
@@ -80,31 +80,6 @@ function getSuggestions(value, modules) {
   }
   return suggestions;
 }
-
-const styles = theme => ({
-  container: {
-    flexGrow: 1,
-    position: "relative"
-  },
-  suggestionsContainerOpen: {
-    position: "absolute",
-    zIndex: 1,
-    marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0
-  },
-  suggestion: {
-    display: "block"
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: "none"
-  },
-  input: {
-    color: "white"
-  }
-});
 
 class IntegrationAutosuggest extends React.Component {
   state = {
@@ -180,24 +155,4 @@ IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function makeSuggestions(modules) {
-  return modules.map(module => {
-    return { label: module.name, id: module.id, module };
-  });
-}
-
-const ModuleSearchWrapper = props => {
-  return (
-    <StoreContext.Consumer>
-      {({ modules, onModuleChange }) => (
-        <IntegrationAutosuggest
-          {...props}
-          modules={makeSuggestions(modules)}
-          onSuggestionSelected={onModuleChange}
-        />
-      )}
-    </StoreContext.Consumer>
-  );
-};
-
-export default withStyles(styles)(ModuleSearchWrapper);
+export default withStyles(styles)(IntegrationAutosuggest);
