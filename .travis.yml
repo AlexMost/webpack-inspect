@@ -1,16 +1,28 @@
 language: node_js
+
 node_js:
 - 8
+
+stages:
+  - lint
+  - deploy
+
 cache:
   directories:
   - node_modules
 before_deploy:
 - npm run build:prod
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  local_dir: dist
-  keep-history: true
-  on:
-    branch: master
+
+jobs:
+  include:
+    - stage: lint
+    - script: npm run ci-clint
+    - stage: deploy
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        local_dir: dist
+        keep-history: true
+        on:
+          branch: master

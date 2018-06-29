@@ -6,6 +6,7 @@
   "repositoryHome": "https://github.com/AlexMost/webpack-inspect",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
+    "ci-lint": "eslint ./frontend",
     "lint": "eslint --fix ./frontend",
     "build": "webpack --mode development",
     "build:prod": "NODE_ENV=production webpack --mode production",
