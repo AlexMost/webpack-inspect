@@ -18,6 +18,7 @@ jobs:
     - stage: lint
     - script: npm run ci-lint
     - stage: deploy
+      if: branch = master
       script: skip
       deploy:
         provider: pages
