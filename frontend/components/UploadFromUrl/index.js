@@ -1,15 +1,15 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
+
 import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles";
+import { loadFromUrl } from "./loader";
 import LinkIcon from "@material-ui/icons/Link";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import UrlModal from "./UrlModal";
-
-async function fetchRemoteJSON(url) {
-  const resp = await fetch(url);
-  return resp.json();
-}
+import LoaderComponent from "./LoaderComponent";
+import { addQuery } from "../../lib/router-utils";
 
 class UploadFromUrl extends React.Component {
   constructor(props) {
@@ -24,13 +24,19 @@ class UploadFromUrl extends React.Component {
   };
   handleOnUrl = async url => {
     this.closeModal();
-    this.props.onUploadStart();
-    const data = await fetchRemoteJSON(url);
-    this.props.onUploadEnd(data, { url });
+    const historyObj = {
+      pathname: this.props.match.path,
+      search: addQuery(this.props.location.search, "stats", url)
+    };
+    this.props.history.push(historyObj);
   };
   render() {
     return (
       <React.Fragment>
+        <LoaderComponent
+          onUploadStart={this.props.onUploadStart}
+          onUploadEnd={this.props.onUploadEnd}
+        />
         <UrlModal
           open={this.state.isModalOpened}
           handleClose={this.closeModal}
@@ -53,4 +59,4 @@ class UploadFromUrl extends React.Component {
   }
 }
 
-export default withStyles(styles)(UploadFromUrl);
+export default withRouter(withStyles(styles)(UploadFromUrl));

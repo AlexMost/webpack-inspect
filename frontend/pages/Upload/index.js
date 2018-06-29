@@ -12,15 +12,9 @@ export default withRouter(props => {
           onStatsUploaded={(data, opts) => {
             ctx.onStatsDataLoaded(data);
             const historyObj = {
-              pathname: "/inspect"
+              pathname: "/inspect",
+              search: props.location.search
             };
-            if (opts && opts.url) {
-              historyObj.search = addQuery(
-                props.history.location.search,
-                "stats",
-                opts.url
-              );
-            }
             props.history.push(historyObj);
           }}
         />
