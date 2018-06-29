@@ -68,6 +68,7 @@ module.exports = () => {
       new CleanWebpackPlugin(["dist"]),
       new webpack.HashedModuleIdsPlugin(),
       new HtmlWebpackPlugin({
+        template: "./template.html",
         title: "Webpack inspect"
       }),
       new webpack.DefinePlugin({
