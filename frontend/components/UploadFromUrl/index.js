@@ -8,7 +8,6 @@ import LinkIcon from "@material-ui/icons/Link";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import UrlModal from "./UrlModal";
-import LoaderComponent from "./LoaderComponent";
 import { addQuery } from "../../lib/router-utils";
 
 class UploadFromUrl extends React.Component {
@@ -24,19 +23,11 @@ class UploadFromUrl extends React.Component {
   };
   handleOnUrl = async url => {
     this.closeModal();
-    const historyObj = {
-      pathname: this.props.match.path,
-      search: addQuery(this.props.location.search, "stats", url)
-    };
-    this.props.history.push(historyObj);
+    this.props.onUrl(url);
   };
   render() {
     return (
       <React.Fragment>
-        <LoaderComponent
-          onUploadStart={this.props.onUploadStart}
-          onUploadEnd={this.props.onUploadEnd}
-        />
         <UrlModal
           open={this.state.isModalOpened}
           handleClose={this.closeModal}

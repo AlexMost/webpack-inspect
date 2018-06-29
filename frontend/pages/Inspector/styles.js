@@ -70,5 +70,9 @@ export const styles = theme => ({
   },
   "contentShift-right": {
     marginRight: 0
+  },
+  toolbar: {
+    display: "flex",
+    justifyContent: "flex-end"
   }
 });

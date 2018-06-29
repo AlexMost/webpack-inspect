@@ -17,6 +17,13 @@ export default withRouter(props => {
             };
             props.history.push(historyObj);
           }}
+          onUrl={url => {
+            const historyObj = {
+              pathname: "/inspect",
+              search: addQuery(props.location.search, "stats", url)
+            };
+            props.history.push(historyObj);
+          }}
         />
       )}
     </StoreContext.Consumer>

@@ -14,49 +14,47 @@ import Sidebar from "../../components/Sidebar/index";
 import { DrawingProgress } from "../../components/DrawingProgress";
 import { styles } from "./styles";
 
-class InspectorComponent extends React.Component {
-  render() {
-    const { classes, open } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <div className={classes.appFrame}>
-          <AppBar
-            className={classNames(classes.appBar, {
-              [classes.appBarShift]: open,
-              [classes["appBarShift-right"]]: open
-            })}
-          >
-            <Toolbar>
-              <ModuleSearch />
-              <GithubLink />
-            </Toolbar>
-            <DrawingProgress />
-          </AppBar>
-          <main
-            className={classNames(classes.content, classes["content-right"], {
-              [classes.contentShift]: open,
-              [classes[`contentShift-right`]]: open
-            })}
-          >
-            <div className={classes.drawerHeader} />
-            <ModulesGraph />
-          </main>
-          <Drawer
-            variant="persistent"
-            anchor="right"
-            open={open}
-            classes={{
-              paper: classes.drawerPaper
-            }}
-          >
-            <Sidebar />
-          </Drawer>
-        </div>
+const InspectorComponent = props => {
+  const { classes, open, modules } = props;
+  const hasModules = Boolean(modules.length);
+  return (
+    <div className={classes.root}>
+      <div className={classes.appFrame}>
+        <AppBar
+          className={classNames(classes.appBar, {
+            [classes.appBarShift]: open,
+            [classes["appBarShift-right"]]: open
+          })}
+        >
+          <Toolbar className={classes.toolbar}>
+            {hasModules ? <ModuleSearch /> : null}
+            <GithubLink />
+          </Toolbar>
+          <DrawingProgress />
+        </AppBar>
+        <main
+          className={classNames(classes.content, classes["content-right"], {
+            [classes.contentShift]: open,
+            [classes[`contentShift-right`]]: open
+          })}
+        >
+          <div className={classes.drawerHeader} />
+          <ModulesGraph />
+        </main>
+        <Drawer
+          variant="persistent"
+          anchor="right"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <Sidebar />
+        </Drawer>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 InspectorComponent.propTypes = {
   classes: PropTypes.object.isRequired,

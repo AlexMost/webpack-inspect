@@ -41,10 +41,7 @@ class UploadComponent extends React.Component {
               onUploadStart={this.onUploadStart}
               onUploadEnd={this.onUploadEnd}
             />
-            <UploadFromUrl
-              onUploadStart={this.onUploadStart}
-              onUploadEnd={this.onUploadEnd}
-            />
+            <UploadFromUrl onUrl={this.props.onUrl} />
           </div>
           {this.state.uploading ? <LinearProgress /> : null}
         </div>

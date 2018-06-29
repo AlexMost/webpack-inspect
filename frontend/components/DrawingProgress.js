@@ -6,7 +6,7 @@ export const DrawingProgress = () => {
   return (
     <StoreContext.Consumer>
       {ctx => {
-        return ctx.isDrawing ? (
+        return ctx.isDrawing || ctx.isUploading ? (
           <LinearProgress style={{ width: "100%" }} />
         ) : null;
       }}

@@ -45,8 +45,13 @@ export default class StoreComponent extends React.Component {
         statsData,
         modules,
         moduleId: null,
-        selectedModuleId: null
+        selectedModuleId: null,
+        isUploading: false
       });
+    };
+
+    const onStatsLoadStart = () => {
+      this.setState({ isUploading: true });
     };
 
     const onReasonSelect = moduleId => {
@@ -57,13 +62,15 @@ export default class StoreComponent extends React.Component {
       modules: [],
       moduleId: null,
       isDrawing: false,
+      isUploading: false,
       selectedModuleId: null,
       onModuleChange,
       onSelectModule,
       onDrawStart,
       onDrawEnd,
       onStatsDataLoaded,
-      onReasonSelect
+      onReasonSelect,
+      onStatsLoadStart
     };
   }
 

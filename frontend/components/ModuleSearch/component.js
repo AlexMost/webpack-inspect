@@ -142,7 +142,7 @@ class IntegrationAutosuggest extends React.Component {
         ref={this.storeInputReference}
         inputProps={{
           classes,
-          placeholder: "Search and select module",
+          placeholder: "Search and select module for the inspection",
           value: this.state.value,
           onChange: this.handleChange
         }}

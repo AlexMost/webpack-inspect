@@ -11,5 +11,7 @@ export const StoreContext = React.createContext({
   onDrawEnd: () => {},
   onReasonSelect: () => {},
   onStatsDataLoaded: () => {},
-  isDrawing: false
+  onStatsLoadStart: () => {},
+  isDrawing: false,
+  isUploading: false
 });
