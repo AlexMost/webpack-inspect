@@ -135,6 +135,16 @@ class IntegrationAutosuggest extends React.Component {
     this.props.onSuggestionSelected(args.suggestion.id);
   };
 
+  storeInputReference = autosuggest => {
+    if (autosuggest !== null) {
+      this.input = autosuggest.input;
+    }
+  };
+
+  componentDidMount() {
+    this.input.focus();
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -154,6 +164,7 @@ class IntegrationAutosuggest extends React.Component {
         renderSuggestionsContainer={renderSuggestionsContainer}
         getSuggestionValue={getSuggestionValue}
         renderSuggestion={renderSuggestion}
+        ref={this.storeInputReference}
         inputProps={{
           classes,
           placeholder: "Search and select module",
