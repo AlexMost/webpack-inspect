@@ -1,11 +1,26 @@
 import vis from "vis";
 import { getModulesMap } from "../../lib/webpack-helpers";
 
+function formatTitle(name, size) {
+  // Kilobytes, Megabytes are 1e3 and 1e6 bytes respectively
+  // If you wonder about powers of 2, you should use Kibibytes, Mibibytes, etc
+  // which have different notation: KiB, MiB, GiB
+  const sizes = [
+    ["B", 1],
+    ["KB", 1000],
+    ["MB", 1000 * 1000],
+    ["GB", 1000 * 1000 * 1000]
+  ];
+  const [units, mul] = sizes.find(([units, mul]) => size / mul < 1000);
+  const truncated = Number(size / mul).toFixed(3);
+  return `${name}<br />${truncated} ${units} (${size} bytes)`;
+}
+
 function createNode(mod, level) {
   return {
     id: mod.id,
     label: mod.id.toString(),
-    title: mod.name,
+    title: formatTitle(mod.name, mod.size),
     color: "gray",
     level,
     shape: "circle"
@@ -16,7 +31,7 @@ function createMainNode(mod, level) {
   return {
     id: mod.id,
     label: mod.label,
-    title: mod.name,
+    title: formatTitle(mod.name, mod.size),
     color: "red",
     level,
     shape: "dot"
