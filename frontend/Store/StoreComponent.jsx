@@ -10,15 +10,13 @@ function makeModules(statsData) {
   const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
 
   // TODO: implement module short name
-  return statsData.modules.map(module => {
-    return {
-      id: module.id,
-      name: module.name,
-      reasons: module.reasons,
-      label: getShortLabel(module.name, prefixes),
-      size: module.size,
-    };
-  });
+  return statsData.modules.map(module => ({
+    id: module.id,
+    name: module.name,
+    reasons: module.reasons,
+    label: getShortLabel(module.name, prefixes),
+    size: module.size,
+  }));
 }
 
 export default class StoreComponent extends React.Component {
