@@ -14,7 +14,8 @@ function makeModules(statsData) {
       id: module.id,
       name: module.name,
       reasons: module.reasons,
-      label: getShortLabel(module.name, prefixes)
+      label: getShortLabel(module.name, prefixes),
+      size: module.size
     };
   });
 }
