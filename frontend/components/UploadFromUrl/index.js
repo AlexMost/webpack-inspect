@@ -23,11 +23,10 @@ class UploadFromUrl extends React.Component {
     this.setState({ isModalOpened: false });
   };
   handleOnUrl = async url => {
-    this.props.onUrl(url);
     this.closeModal();
     this.props.onUploadStart();
     const data = await fetchRemoteJSON(url);
-    this.props.onUploadEnd(data);
+    this.props.onUploadEnd(data, { url });
   };
   render() {
     return (

@@ -4,15 +4,17 @@ export const styles = theme => ({
   },
   modal: {
     position: "absolute",
-    width: theme.spacing.unit * 50,
+    width: theme.spacing.unit * 70,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
+    display: "flex",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)"
   },
   modalInput: {
-    width: "100%"
+    width: "100%",
+    marginRight: theme.spacing.unit * 4
   }
 });

@@ -3,6 +3,7 @@ import Modal from "@material-ui/core/Modal";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 import { styles } from "./styles";
 
 class UrlModal extends React.Component {
@@ -17,6 +18,9 @@ class UrlModal extends React.Component {
     if (ev.key === "Enter") {
       this.props.onUrl(this.state.url);
     }
+  };
+  handleButtonPress = () => {
+    this.props.onUrl(this.state.url);
   };
   render() {
     const { classes, handleClose, open } = this.props;
@@ -36,6 +40,13 @@ class UrlModal extends React.Component {
             onChange={this.handleUrlChange}
             onKeyPress={this.handleKeyPress}
           />
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={this.handleButtonPress}
+          >
+            Ok
+          </Button>
         </div>
       </Modal>
     );
