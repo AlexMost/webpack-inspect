@@ -5,6 +5,7 @@ node_js:
 
 stages:
   - lint
+  - test
   - deploy
 
 cache:
@@ -17,6 +18,8 @@ jobs:
   include:
     - stage: lint
     - script: npm run ci-lint
+    - stage: test
+    - script: skip
     - stage: deploy
       if: branch = master
       script: skip
