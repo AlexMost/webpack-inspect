@@ -1,8 +1,10 @@
-export const styles = theme => ({
+const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
   input: {
-    display: "none"
-  }
+    display: "none",
+  },
 });
+
+export default styles;

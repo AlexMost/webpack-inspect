@@ -1,12 +1,14 @@
+/* eslint import/prefer-default-export: 0, no-param-reassign: 0 */
+
 export function registerServiceWorker(serviceWorkerPath) {
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
+    window.addEventListener("load", () => {
       navigator.serviceWorker
         .register(serviceWorkerPath)
-        .then(function(reg) {
-          reg.onupdatefound = function() {
-            var installingWorker = reg.installing;
-            installingWorker.onstatechange = function() {
+        .then(reg => {
+          reg.onupdatefound = () => {
+            const installingWorker = reg.installing;
+            installingWorker.onstatechange = () => {
               switch (installingWorker.state) {
                 case "installed":
                   if (navigator.serviceWorker.controller) {
@@ -24,14 +26,16 @@ export function registerServiceWorker(serviceWorkerPath) {
 
                 case "redundant":
                   console.error(
-                    "The installing service worker became redundant."
+                    "The installing service worker became redundant.",
                   );
                   break;
+                default:
+                  console.warn("Unhandled state", installingWorker.state);
               }
             };
           };
         })
-        .catch(function(e) {
+        .catch(e => {
           console.error("Error during service worker registration:", e);
         });
     });

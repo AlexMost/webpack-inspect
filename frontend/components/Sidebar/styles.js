@@ -1,12 +1,14 @@
-export const styles = theme => ({
+const styles = () => ({
   sidebarRoot: {
     padding: "10px",
-    "overflow-y": "scroll"
+    "overflow-y": "scroll",
   },
   listItemCaption: {
-    "word-wrap": "break-word"
+    "word-wrap": "break-word",
   },
   reasonLabel: {
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 });
+
+export default styles;

@@ -1,3 +1,5 @@
+/* eslint import/prefer-default-export: 0 */
+
 const STATS_URL = "/stats";
 
 export async function loadStatsData() {

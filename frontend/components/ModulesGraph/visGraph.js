@@ -9,9 +9,9 @@ function formatTitle(name, size) {
     ["B", 1],
     ["KB", 1000],
     ["MB", 1000 * 1000],
-    ["GB", 1000 * 1000 * 1000]
+    ["GB", 1000 * 1000 * 1000],
   ];
-  const [units, mul] = sizes.find(([units, mul]) => size / mul < 1000);
+  const [units, mul] = sizes.find(([_, _mul]) => size / _mul < 1000); // eslint-disable-line
   const truncated = Number(size / mul).toFixed(3);
   return `${name}<br />${truncated} ${units} (${size} bytes)`;
 }
@@ -23,7 +23,7 @@ function createNode(mod, level) {
     title: formatTitle(mod.name, mod.size),
     color: "gray",
     level,
-    shape: "circle"
+    shape: "circle",
   };
 }
 
@@ -34,7 +34,7 @@ function createMainNode(mod, level) {
     title: formatTitle(mod.name, mod.size),
     color: "red",
     level,
-    shape: "dot"
+    shape: "dot",
   };
 }
 
@@ -42,7 +42,7 @@ function createEdge(modFrom, modTo) {
   return {
     from: modFrom.id,
     to: modTo.id,
-    arrows: "to"
+    arrows: "to",
   };
 }
 
@@ -83,46 +83,47 @@ function createEdge(modFrom, modTo) {
 // }
 
 function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts) {
+  /* eslint no-console: 0 */
   console.log(
-    `Rendering graph: nodes - ${nodes.length}; edges - ${edges.length}`
+    `Rendering graph: nodes - ${nodes.length}; edges - ${edges.length}`,
   );
-  var container = document.getElementById("graph-container");
-  var data = {
-    nodes: nodes,
-    edges: edges
+  const container = document.getElementById("graph-container");
+  const data = {
+    nodes,
+    edges,
   };
-  var options = {
+  const options = {
     nodes: {
-      shape: "circle"
+      shape: "circle",
     },
     width: `${opts.width}px`,
     height: `${opts.height}px`,
     layout: {
       hierarchical: {
         direction: "DU",
-        nodeSpacing: 80
-      }
-    }
+        nodeSpacing: 80,
+      },
+    },
   };
-  var network = new vis.Network(container, data, options);
+  const network = new vis.Network(container, data, options);
 
   // clusterization
   // makeClusters(network, nodes, clusterMap);
 
-  network.on("click", function(params) {
+  network.on("click", params => {
     if (params.nodes.length > 0) {
       onNodeClick({ node: params.nodes[0] });
     }
   });
-  network.on("afterDrawing", function(args) {
+  network.on("afterDrawing", () => {
     onDrawEnd();
   });
   return network;
 }
 
-export function renderGraph(
+function renderGraph(
   { modules, moduleId, onNodeClick, onDrawEnd, onDrawStart },
-  opts
+  opts,
 ) {
   onDrawStart();
   const modulesMap = getModulesMap(modules);
@@ -139,7 +140,7 @@ export function renderGraph(
       nodes.push(
         node.id === moduleId
           ? createMainNode(node, level)
-          : createNode(node, level)
+          : createNode(node, level),
       );
 
       node.reasons
@@ -157,3 +158,5 @@ export function renderGraph(
   walk(modulesMap[moduleId]);
   return drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts);
 }
+
+export default renderGraph;

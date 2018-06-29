@@ -12,7 +12,12 @@ export const GithubIcon = () => (
 );
 
 export const GithubLink = props => (
-  <a href={REPOSITORY_HOME} {...props} target="_blank">
+  <a
+    href={REPOSITORY_HOME}
+    {...props}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
     <Tooltip title="See github page">
       <IconButton variant="fab" component="span">
         <GithubIcon />

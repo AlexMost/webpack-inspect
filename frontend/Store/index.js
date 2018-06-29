@@ -1,6 +1,6 @@
 import React from "react";
 
-export const StoreContext = React.createContext({
+const StoreContext = React.createContext({
   modules: [],
   clusterMap: {},
   moduleId: null,
@@ -13,5 +13,7 @@ export const StoreContext = React.createContext({
   onStatsDataLoaded: () => {},
   onStatsLoadStart: () => {},
   isDrawing: false,
-  isUploading: false
+  isUploading: false,
 });
+
+export default StoreContext;
