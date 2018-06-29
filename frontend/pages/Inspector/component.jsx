@@ -8,11 +8,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
 import { GithubLink } from "../../components/Github";
-import { ModulesGraph } from "../../components/ModulesGraph/index";
+import ModulesGraph from "../../components/ModulesGraph/index";
 import ModuleSearch from "../../components/ModuleSearch";
 import Sidebar from "../../components/Sidebar/index";
-import { DrawingProgress } from "../../components/DrawingProgress";
-import { styles } from "./styles";
+import DrawingProgress from "../../components/DrawingProgress";
+import styles from "./styles";
 
 const InspectorComponent = props => {
   const { classes, open, modules } = props;
@@ -23,7 +23,7 @@ const InspectorComponent = props => {
         <AppBar
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open,
-            [classes["appBarShift-right"]]: open
+            [classes["appBarShift-right"]]: open,
           })}
         >
           <Toolbar className={classes.toolbar}>
@@ -35,7 +35,7 @@ const InspectorComponent = props => {
         <main
           className={classNames(classes.content, classes["content-right"], {
             [classes.contentShift]: open,
-            [classes[`contentShift-right`]]: open
+            [classes[`contentShift-right`]]: open,
           })}
         >
           <div className={classes.drawerHeader} />
@@ -46,7 +46,7 @@ const InspectorComponent = props => {
           anchor="right"
           open={open}
           classes={{
-            paper: classes.drawerPaper
+            paper: classes.drawerPaper,
           }}
         >
           <Sidebar />
@@ -56,10 +56,15 @@ const InspectorComponent = props => {
   );
 };
 
+InspectorComponent.defaultProps = {
+  modules: [],
+  open: false,
+};
+
 InspectorComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-  open: PropTypes.bool
+  modules: PropTypes.arrayOf(PropTypes.object),
+  open: PropTypes.bool,
 };
 
 export default withStyles(styles, { withTheme: true })(InspectorComponent);

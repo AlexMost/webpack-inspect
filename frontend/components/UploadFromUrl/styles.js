@@ -1,6 +1,6 @@
-export const styles = theme => ({
+const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
   modal: {
     position: "absolute",
@@ -11,10 +11,12 @@ export const styles = theme => ({
     display: "flex",
     top: "50%",
     left: "50%",
-    transform: "translate(-50%, -50%)"
+    transform: "translate(-50%, -50%)",
   },
   modalInput: {
     width: "100%",
-    marginRight: theme.spacing.unit * 4
-  }
+    marginRight: theme.spacing.unit * 4,
+  },
 });
+
+export default styles;

@@ -14,11 +14,11 @@ const PUBLIC_PATH = isProd ? publicUrl : "http://localhost:8080/";
 
 module.exports = () => {
   return {
-    entry: "./frontend/entry.js",
+    entry: "./frontend/entry.jsx",
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "[name].[chunkhash].js",
-      chunkFilename: "[name].[chunkhash].js"
+      chunkFilename: "[name].[chunkhash].js",
     },
     devtool: "inline-source-map",
     module: {
@@ -26,17 +26,17 @@ module.exports = () => {
         {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
-          use: ["babel-loader"]
-        }
-      ]
+          use: ["babel-loader"],
+        },
+      ],
     },
     devServer: {
       contentBase: "./dist",
       compress: false,
-      historyApiFallback: true
+      historyApiFallback: true,
     },
     resolve: {
-      extensions: ["*", ".js", ".jsx"]
+      extensions: ["*", ".js", ".jsx"],
     },
     optimization: {
       runtimeChunk: "single",
@@ -48,10 +48,10 @@ module.exports = () => {
             compress: true,
             ecma: 6,
             mangle: {
-              safari10: true
-            }
-          }
-        })
+              safari10: true,
+            },
+          },
+        }),
       ],
       splitChunks: {
         minChunks: 2,
@@ -59,23 +59,23 @@ module.exports = () => {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
             name: "vendors",
-            chunks: "all"
-          }
-        }
-      }
+            chunks: "all",
+          },
+        },
+      },
     },
     plugins: [
       new CleanWebpackPlugin(["dist"]),
       new webpack.HashedModuleIdsPlugin(),
       new HtmlWebpackPlugin({
         template: "./template.html",
-        title: "Webpack inspect"
+        title: "Webpack inspect",
       }),
       new webpack.DefinePlugin({
         BASENAME: JSON.stringify(BASENAME),
         PUBLIC_PATH: JSON.stringify(PUBLIC_PATH),
         REPOSITORY_HOME: JSON.stringify(repositoryHome),
-        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
+        "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
       }),
       new SWPrecacheWebpackPlugin({
         cacheId: "webpack-inspect",
@@ -86,10 +86,10 @@ module.exports = () => {
         staticFileGlobsIgnorePatterns: [
           /\.map$/,
           /asset-manifest\.json$/,
-          /CNAME/
-        ]
+          /CNAME/,
+        ],
       }),
-      new CopyWebpackPlugin(["./CNAME", "./favicon.ico"])
-    ]
+      new CopyWebpackPlugin(["./CNAME", "./favicon.ico"]),
+    ],
   };
 };

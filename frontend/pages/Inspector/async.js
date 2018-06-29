@@ -1,6 +1,8 @@
 import { asyncComponent } from "react-async-component";
 
-export const Inspector = asyncComponent({
+const Inspector = asyncComponent({
   resolve: () =>
-    import(/* webpackPrefetch: true, webpackChunkName: "InspectorPage" */ "./index")
+    import(/* webpackPrefetch: true, webpackChunkName: "InspectorPage" */ "./index"),
 });
+
+export default Inspector;

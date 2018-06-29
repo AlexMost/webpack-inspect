@@ -1,35 +1,41 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
-import { styles } from "./styles";
 import { withStyles } from "@material-ui/core/styles";
-import { loadFromUrl } from "./loader";
 import LinkIcon from "@material-ui/icons/Link";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
+import styles from "./styles";
 import UrlModal from "./UrlModal";
-import { addQuery } from "../../lib/router-utils";
 
 class UploadFromUrl extends React.Component {
   constructor(props) {
     super(props);
     this.state = { isModalOpened: false };
   }
+
   openModal = () => {
     this.setState({ isModalOpened: true });
   };
+
   closeModal = () => {
     this.setState({ isModalOpened: false });
   };
+
   handleOnUrl = async url => {
+    const { onUrl } = this.props;
     this.closeModal();
-    this.props.onUrl(url);
+    onUrl(url);
   };
+
   render() {
+    const { disabled, classes } = this.props;
+    const { isModalOpened } = this.state;
     return (
       <React.Fragment>
         <UrlModal
-          open={this.state.isModalOpened}
+          open={isModalOpened}
           handleClose={this.closeModal}
           onUrl={this.handleOnUrl}
         />
@@ -37,10 +43,10 @@ class UploadFromUrl extends React.Component {
           <Button
             color="primary"
             variant="fab"
-            disabled={this.props.disabled}
+            disabled={disabled}
             component="span"
             onClick={this.openModal}
-            className={this.props.classes.button}
+            className={classes.button}
           >
             <LinkIcon />
           </Button>
@@ -49,5 +55,10 @@ class UploadFromUrl extends React.Component {
     );
   }
 }
+
+UploadFromUrl.propTypes = {
+  disabled: PropTypes.bool.isRequired,
+  classes: PropTypes.object.isRequired,
+};
 
 export default withRouter(withStyles(styles)(UploadFromUrl));

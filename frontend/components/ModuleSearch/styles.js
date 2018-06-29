@@ -1,24 +1,26 @@
-export const styles = theme => ({
+const styles = theme => ({
   container: {
     flexGrow: 1,
-    position: "relative"
+    position: "relative",
   },
   suggestionsContainerOpen: {
     position: "absolute",
     zIndex: 1,
     marginTop: theme.spacing.unit,
     left: 0,
-    right: 0
+    right: 0,
   },
   suggestion: {
-    display: "block"
+    display: "block",
   },
   suggestionsList: {
     margin: 0,
     padding: 0,
-    listStyleType: "none"
+    listStyleType: "none",
   },
   input: {
-    color: "white"
-  }
+    color: "white",
+  },
 });
+
+export default styles;

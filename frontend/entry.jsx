@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { App } from "./components/App/index";
+import App from "./components/App/index";
 import { registerServiceWorker } from "./lib/service-worker";
 
 const container = document.createElement("div");

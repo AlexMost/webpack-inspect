@@ -2,7 +2,7 @@ import {
   isNPMPackage,
   isWebpackBuiltin,
   NPM_SCOPED_PATTERN,
-  NPM_SIMPLE_PATTERN
+  NPM_SIMPLE_PATTERN,
 } from "./webpack-helpers";
 
 const CAPITAL_LETTER = /[A-Z]/;
@@ -15,22 +15,28 @@ class Cluster {
     this.id = id;
     this.modIds = new Set();
   }
+
   getId() {
     return this.id;
   }
+
   getName() {
     const parts = this.id.split("/");
     return parts[parts.length - 1];
   }
+
   hasModule(id) {
     return this.modIds.has(id);
   }
+
   getModulesIds() {
     return Array.from(this.modIds);
   }
+
   getSize() {
     return this.modIds.size;
   }
+
   addModule(mod) {
     this.modIds.add(mod.id);
   }

@@ -1,12 +1,13 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import { StoreContext } from "../../Store";
+import StoreContext from "../../Store";
 import InspectorComponent from "./component";
 import { getQueryParam } from "../../lib/router-utils";
 import LoaderComponent from "../../components/UploadFromUrl/LoaderComponent";
 
-export default withRouter(props => {
-  const statsUrl = getQueryParam(props.location.search, "stats");
+const InspectorPage = withRouter(props => {
+  const { location } = props;
+  const statsUrl = getQueryParam(location.search, "stats");
   return (
     <StoreContext.Consumer>
       {ctx =>
@@ -29,3 +30,5 @@ export default withRouter(props => {
     </StoreContext.Consumer>
   );
 });
+
+export default InspectorPage;

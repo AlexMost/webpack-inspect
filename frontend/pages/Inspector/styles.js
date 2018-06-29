@@ -1,52 +1,52 @@
 const drawerWidth = "30vw";
 
-export const styles = theme => ({
+const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   appFrame: {
     zIndex: 1,
     overflow: "hidden",
     position: "relative",
     display: "flex",
-    width: "100%"
+    width: "100%",
   },
   appBar: {
     position: "absolute",
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
     width: "70vw",
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   "appBarShift-right": {
-    marginRight: drawerWidth
+    marginRight: drawerWidth,
   },
   menuButton: {
     marginLeft: 12,
-    marginRight: 20
+    marginRight: 20,
   },
   hide: {
-    display: "none"
+    display: "none",
   },
   drawerPaper: {
     position: "relative",
     width: drawerWidth,
     overflow: "hidden",
-    height: "100vh"
+    height: "100vh",
   },
   drawerHeader: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     padding: "0 8px",
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
@@ -56,23 +56,25 @@ export const styles = theme => ({
     padding: theme.spacing.unit * 3,
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   "content-right": {
-    marginRight: -drawerWidth
+    marginRight: -drawerWidth,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   "contentShift-right": {
-    marginRight: 0
+    marginRight: 0,
   },
   toolbar: {
     display: "flex",
-    justifyContent: "flex-end"
-  }
+    justifyContent: "flex-end",
+  },
 });
+
+export default styles;

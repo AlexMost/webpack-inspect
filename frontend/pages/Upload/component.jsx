@@ -1,26 +1,32 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { GithubRibbon } from "../../components/Github";
 import UploadFromUrl from "../../components/UploadFromUrl";
 import UploadFromLocal from "../../components/UploadFromLocal";
-import { styles } from "./styles";
+import styles from "./styles";
 
 class UploadComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = { uploading: false };
   }
+
   onUploadStart = () => {
     this.setState({ uploading: true });
   };
+
   onUploadEnd = (data, opts) => {
+    const { onStatsUploaded } = this.props;
     this.setState({ uploading: false });
-    this.props.onStatsUploaded(data, opts);
+    onStatsUploaded(data, opts);
   };
+
   render() {
-    const { classes } = this.props;
+    const { classes, onUrl } = this.props;
+    const { uploading } = this.state;
     return (
       <div className={classes.root}>
         <GithubRibbon />
@@ -34,20 +40,32 @@ class UploadComponent extends React.Component {
             color="textSecondary"
             paragraph
           >
-            webpack --profile --json > stats.json
+            webpack --profile --json &gt; stats.json
           </Typography>
           <div className={classes.actions}>
             <UploadFromLocal
               onUploadStart={this.onUploadStart}
               onUploadEnd={this.onUploadEnd}
+              disabled={uploading}
             />
-            <UploadFromUrl onUrl={this.props.onUrl} />
+            <UploadFromUrl onUrl={onUrl} disabled={uploading} />
           </div>
-          {this.state.uploading ? <LinearProgress /> : null}
+          {uploading ? <LinearProgress /> : null}
         </div>
       </div>
     );
   }
 }
+
+UploadComponent.defaultProps = {
+  onUrl: () => {},
+  onStatsUploaded: () => {},
+};
+
+UploadComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onUrl: PropTypes.func,
+  onStatsUploaded: PropTypes.func,
+};
 
 export default withStyles(styles)(UploadComponent);

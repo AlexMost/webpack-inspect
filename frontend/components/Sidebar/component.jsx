@@ -5,11 +5,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import { styles } from "./styles";
+import styles from "./styles";
 
 const SidebarComponent = withStyles(styles)(props => {
-  const module = props.modules.find(m => m.id === props.selectedModuleId);
-  const { sidebarRoot, listItemCaption, reasonLabel } = props.classes;
+  const { modules, selectedModuleId, classes } = props;
+  const { sidebarRoot, listItemCaption, reasonLabel } = classes;
+
+  const module = modules.find(m => m.id === selectedModuleId);
   if (!module) return null;
   return (
     <div className={sidebarRoot}>
@@ -18,18 +20,19 @@ const SidebarComponent = withStyles(styles)(props => {
       </Typography>
       <List disablePadding>
         <ListSubheader disableSticky>
-          {module.reasons.length} Reasons:
+          {module.reasons.length}
+          Reasons:
         </ListSubheader>
         {module.reasons.map(reason => {
-          const module = props.modules.find(m => m.id === reason.moduleId);
+          const { label, name } = modules.find(m => m.id === reason.moduleId);
           return (
             <ListItem key={reason.module + reason.loc} divider>
               <ListItemText>
                 <Typography className={reasonLabel} noWrap>
-                  {module.label}
+                  {label}
                 </Typography>
                 <Typography className={listItemCaption} variant="caption">
-                  {module.name}
+                  {name}
                 </Typography>
               </ListItemText>
             </ListItem>

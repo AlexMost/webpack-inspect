@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
 import { withStyles } from "@material-ui/core/styles";
-import { styles } from "./styles";
+import styles from "./styles";
 
 function renderInput(inputProps) {
   const { classes, ref, ...other } = inputProps;
@@ -18,9 +18,9 @@ function renderInput(inputProps) {
       InputProps={{
         inputRef: ref,
         classes: {
-          input: classes.input
+          input: classes.input,
         },
-        ...other
+        ...other,
       }}
     />
   );
@@ -33,17 +33,18 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   return (
     <MenuItem selected={isHighlighted} component="div">
       <div>
-        {parts.map((part, index) => {
-          return part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </strong>
-          );
-        })}
+        {parts.map(
+          (part, index) =>
+            part.highlight ? (
+              <span key={String(index)} style={{ fontWeight: 300 }}>
+                {part.text}
+              </span>
+            ) : (
+              <strong key={String(index)} style={{ fontWeight: 500 }}>
+                {part.text}
+              </strong>
+            ),
+        )}
       </div>
     </MenuItem>
   );
@@ -84,31 +85,12 @@ function getSuggestions(value, modules) {
 class IntegrationAutosuggest extends React.Component {
   state = {
     value: "",
-    suggestions: []
+    suggestions: [],
   };
 
-  handleSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value, this.props.modules)
-    });
-  };
-
-  handleSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
-
-  handleChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
-  };
-
-  handleSuggestionSelected = (event, args) => {
-    console.log("selected suggestion", args.suggestion);
-    this.props.onSuggestionSelected(args.suggestion.id);
-  };
+  componentDidMount() {
+    this.input.focus();
+  }
 
   storeInputReference = autosuggest => {
     if (autosuggest !== null) {
@@ -116,23 +98,43 @@ class IntegrationAutosuggest extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.input.focus();
-  }
+  handleSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    });
+  };
+
+  handleChange = (event, { newValue }) => {
+    this.setState({
+      value: newValue,
+    });
+  };
+
+  handleSuggestionsFetchRequested = ({ value }) => {
+    const { modules } = this.props;
+    this.setState({
+      suggestions: getSuggestions(value, modules),
+    });
+  };
+
+  handleSuggestionSelected = (event, args) => {
+    const { onSuggestionSelected } = this.props;
+    onSuggestionSelected(args.suggestion.id);
+  };
 
   render() {
     const { classes } = this.props;
-
+    const { suggestions, value } = this.state;
     return (
       <Autosuggest
         theme={{
           container: classes.container,
           suggestionsContainerOpen: classes.suggestionsContainerOpen,
           suggestionsList: classes.suggestionsList,
-          suggestion: classes.suggestion
+          suggestion: classes.suggestion,
         }}
         renderInputComponent={renderInput}
-        suggestions={this.state.suggestions}
+        suggestions={suggestions}
         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
         onSuggestionSelected={this.handleSuggestionSelected}
@@ -143,8 +145,8 @@ class IntegrationAutosuggest extends React.Component {
         inputProps={{
           classes,
           placeholder: "Search and select module for the inspection",
-          value: this.state.value,
-          onChange: this.handleChange
+          value,
+          onChange: this.handleChange,
         }}
       />
     );
@@ -152,7 +154,9 @@ class IntegrationAutosuggest extends React.Component {
 }
 
 IntegrationAutosuggest.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  onSuggestionSelected: PropTypes.func.isRequired,
+  modules: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default withStyles(styles)(IntegrationAutosuggest);
