@@ -16,7 +16,7 @@ before_deploy:
 jobs:
   include:
     - stage: lint
-    - script: npm run ci-clint
+    - script: npm run ci-lint
     - stage: deploy
       deploy:
         provider: pages
