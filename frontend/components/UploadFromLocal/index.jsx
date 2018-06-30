@@ -18,11 +18,11 @@ function readFile(file, cb) {
 }
 
 class UploadFromLocal extends React.Component {
-  handleFileUpload = ev => {
+  handleFileUpload = (ev) => {
     const { onUploadStart, onUploadEnd } = this.props;
     onUploadStart();
     if (ev.target.files !== null) {
-      readFile(ev.target.files[0], statsData => {
+      readFile(ev.target.files[0], (statsData) => {
         onUploadEnd(statsData);
       });
     }

@@ -1,4 +1,4 @@
-const styles = theme => ({
+const styles = (theme) => ({
   container: {
     flexGrow: 1,
     position: "relative",

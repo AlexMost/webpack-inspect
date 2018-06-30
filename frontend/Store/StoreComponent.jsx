@@ -10,7 +10,7 @@ function makeModules(statsData) {
   const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
 
   // TODO: implement module short name
-  return statsData.modules.map(module => ({
+  return statsData.modules.map((module) => ({
     id: module.id,
     name: module.name,
     reasons: module.reasons,
@@ -23,11 +23,11 @@ export default class StoreComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    const onModuleChange = moduleId => {
+    const onModuleChange = (moduleId) => {
       this.setState({ moduleId, selectedModuleId: moduleId });
     };
 
-    const onSelectModule = args => {
+    const onSelectModule = (args) => {
       this.setState({ selectedModuleId: args.node });
     };
 
@@ -39,7 +39,7 @@ export default class StoreComponent extends React.Component {
       this.setState({ isDrawing: false });
     };
 
-    const onStatsDataLoaded = statsData => {
+    const onStatsDataLoaded = (statsData) => {
       const modules = makeModules(statsData);
       this.setState({
         statsData,
@@ -54,7 +54,7 @@ export default class StoreComponent extends React.Component {
       this.setState({ isUploading: true });
     };
 
-    const onReasonSelect = moduleId => {
+    const onReasonSelect = (moduleId) => {
       this.setState({ focusModule: moduleId });
     };
 

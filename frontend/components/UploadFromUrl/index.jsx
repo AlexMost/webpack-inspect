@@ -23,7 +23,7 @@ class UploadFromUrl extends React.Component {
     this.setState({ isModalOpened: false });
   };
 
-  handleOnUrl = async url => {
+  handleOnUrl = async (url) => {
     const { onUrl } = this.props;
     this.closeModal();
     onUrl(url);

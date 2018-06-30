@@ -110,7 +110,7 @@ function drawVizGraph({ nodes, edges, onNodeClick, onDrawEnd }, opts) {
   // clusterization
   // makeClusters(network, nodes, clusterMap);
 
-  network.on("click", params => {
+  network.on("click", (params) => {
     if (params.nodes.length > 0) {
       onNodeClick({ node: params.nodes[0] });
     }
@@ -144,8 +144,8 @@ function renderGraph(
       );
 
       node.reasons
-        .filter(reason => !!modulesMap[reason.moduleId])
-        .forEach(reason => {
+        .filter((reason) => !!modulesMap[reason.moduleId])
+        .forEach((reason) => {
           const reasonMod = modulesMap[reason.moduleId];
           edges.push(createEdge(node, reasonMod));
           if (!visited.has(reason.moduleId)) {

@@ -45,7 +45,7 @@ class Cluster {
 function getNodeModulesClusters(modules) {
   const clusterMap = {};
 
-  modules.forEach(m => {
+  modules.forEach((m) => {
     const [_, packageName] =
       m.name.match(NPM_SCOPED_PATTERN) || m.name.match(NPM_SIMPLE_PATTERN);
     if (!clusterMap[packageName]) {
@@ -54,7 +54,7 @@ function getNodeModulesClusters(modules) {
     clusterMap[packageName].addModule(m);
   });
   const result = [];
-  Object.keys(clusterMap).forEach(key => {
+  Object.keys(clusterMap).forEach((key) => {
     result.push(clusterMap[key]);
   });
   return result;
@@ -75,7 +75,7 @@ function getOtherClusterName(modPath) {
 
 function getOthersClusters(modules) {
   const clusters = {};
-  modules.forEach(m => {
+  modules.forEach((m) => {
     if (CAPITAL_LETTER.test(m.name)) {
       const clusterName = getOtherClusterName(m.name);
       if (!clusters[clusterName]) {
@@ -85,7 +85,7 @@ function getOthersClusters(modules) {
     }
   });
   const result = [];
-  Object.keys(clusters).forEach(key => {
+  Object.keys(clusters).forEach((key) => {
     if (clusters[key].getSize() !== 1) {
       result.push(clusters[key]);
     }
@@ -98,7 +98,7 @@ export function getModulesClusters(modules) {
   const nodeModules = [];
   const others = [];
 
-  modules.forEach(m => {
+  modules.forEach((m) => {
     if (isWebpackBuiltin(m.name)) {
       webpackBuiltin.push(m);
     } else if (isNPMPackage(m.name)) {
@@ -117,8 +117,8 @@ export function getModulesClusters(modules) {
 export function getClusterMap(modules) {
   const clusters = getModulesClusters(modules);
   const map = {};
-  clusters.forEach(cluster => {
-    cluster.getModulesIds().forEach(modId => {
+  clusters.forEach((cluster) => {
+    cluster.getModulesIds().forEach((modId) => {
       map[modId] = cluster;
     });
   });

@@ -12,9 +12,10 @@ import ModulesGraph from "../../components/ModulesGraph/index";
 import ModuleSearch from "../../components/ModuleSearch";
 import Sidebar from "../../components/Sidebar/index";
 import DrawingProgress from "../../components/DrawingProgress";
+import ModulesStats from "../../components/ModulesStats";
 import styles from "./styles";
 
-const InspectorComponent = props => {
+const InspectorComponent = (props) => {
   const { classes, open, modules } = props;
   const hasModules = Boolean(modules.length);
   return (
@@ -39,6 +40,7 @@ const InspectorComponent = props => {
           })}
         >
           <div className={classes.drawerHeader} />
+          <ModulesStats />
           <ModulesGraph />
         </main>
         <Drawer

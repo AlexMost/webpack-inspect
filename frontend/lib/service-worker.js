@@ -5,7 +5,7 @@ export function registerServiceWorker(serviceWorkerPath) {
     window.addEventListener("load", () => {
       navigator.serviceWorker
         .register(serviceWorkerPath)
-        .then(reg => {
+        .then((reg) => {
           reg.onupdatefound = () => {
             const installingWorker = reg.installing;
             installingWorker.onstatechange = () => {
@@ -35,7 +35,7 @@ export function registerServiceWorker(serviceWorkerPath) {
             };
           };
         })
-        .catch(e => {
+        .catch((e) => {
           console.error("Error during service worker registration:", e);
         });
     });

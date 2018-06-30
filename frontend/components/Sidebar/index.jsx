@@ -4,7 +4,7 @@ import SidebarComponent from "./component";
 
 const Sidebar = () => (
   <StoreContext.Consumer>
-    {ctx => (
+    {(ctx) => (
       <SidebarComponent
         modules={ctx.modules || []}
         selectedModuleId={ctx.selectedModuleId}

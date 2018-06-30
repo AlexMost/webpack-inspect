@@ -9,7 +9,7 @@ const AsyncModulesGraphComponent = asyncComponent({
 
 const ModulesGraph = () => (
   <StoreContext.Consumer>
-    {ctx =>
+    {(ctx) =>
       ctx.moduleId !== null ? (
         <AsyncModulesGraphComponent
           modules={ctx.modules}

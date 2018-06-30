@@ -11,7 +11,7 @@ export const GithubIcon = () => (
   </Icon>
 );
 
-export const GithubLink = props => (
+export const GithubLink = (props) => (
   <a
     href={REPOSITORY_HOME}
     {...props}

@@ -4,7 +4,7 @@ import StoreContext from "../Store";
 
 const DrawingProgress = () => (
   <StoreContext.Consumer>
-    {ctx =>
+    {(ctx) =>
       ctx.isDrawing || ctx.isUploading ? (
         <LinearProgress style={{ width: "100%" }} />
       ) : null

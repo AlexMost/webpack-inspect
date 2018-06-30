@@ -15,6 +15,7 @@
     "no-plusplus": 0,
     "react/forbid-prop-types": 0,
     "no-console": 0,
-    "no-unused-vars": ["error", { "varsIgnorePattern": "^_" }]
+    "no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
+    "react/jsx-one-expression-per-line": 0
   }
 }
