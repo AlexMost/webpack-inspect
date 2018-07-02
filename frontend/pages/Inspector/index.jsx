@@ -5,12 +5,12 @@ import InspectorComponent from "./component";
 import { getQueryParam } from "../../lib/router-utils";
 import LoaderComponent from "../../components/UploadFromUrl/LoaderComponent";
 
-const InspectorPage = withRouter(props => {
+const InspectorPage = withRouter((props) => {
   const { location } = props;
   const statsUrl = getQueryParam(location.search, "stats");
   return (
     <StoreContext.Consumer>
-      {ctx =>
+      {(ctx) =>
         ctx.modules.length || statsUrl ? (
           <React.Fragment>
             <LoaderComponent
@@ -20,6 +20,7 @@ const InspectorPage = withRouter(props => {
             <InspectorComponent
               open={ctx.moduleId !== null}
               modules={ctx.modules}
+              showStats={ctx.moduleId === null}
               {...props}
             />
           </React.Fragment>

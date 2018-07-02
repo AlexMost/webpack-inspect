@@ -1,6 +1,6 @@
 const drawerWidth = "30vw";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     flexGrow: 1,
   },

@@ -3,31 +3,37 @@ import React from "react";
 import PropTypes from "prop-types";
 import StoreContext from "./index";
 import { getClusterMap } from "../lib/clusterize";
-import { getModulesPrefixes, getShortLabel } from "../lib/webpack-helpers";
+import {
+  getModulesPrefixes,
+  getShortLabel,
+  isWebpackBuiltin,
+} from "../lib/webpack-helpers";
 
 function makeModules(statsData) {
   const clusterMap = getClusterMap(statsData.modules);
   const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
 
   // TODO: implement module short name
-  return statsData.modules.map(module => ({
-    id: module.id,
-    name: module.name,
-    reasons: module.reasons,
-    label: getShortLabel(module.name, prefixes),
-    size: module.size,
-  }));
+  return statsData.modules
+    .filter((module) => !isWebpackBuiltin(module.name))
+    .map((module) => ({
+      id: module.id,
+      name: module.name,
+      reasons: module.reasons,
+      label: getShortLabel(module.name, prefixes),
+      size: module.size,
+    }));
 }
 
 export default class StoreComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    const onModuleChange = moduleId => {
+    const onModuleChange = (moduleId) => {
       this.setState({ moduleId, selectedModuleId: moduleId });
     };
 
-    const onSelectModule = args => {
+    const onSelectModule = (args) => {
       this.setState({ selectedModuleId: args.node });
     };
 
@@ -39,7 +45,7 @@ export default class StoreComponent extends React.Component {
       this.setState({ isDrawing: false });
     };
 
-    const onStatsDataLoaded = statsData => {
+    const onStatsDataLoaded = (statsData) => {
       const modules = makeModules(statsData);
       this.setState({
         statsData,
@@ -54,7 +60,7 @@ export default class StoreComponent extends React.Component {
       this.setState({ isUploading: true });
     };
 
-    const onReasonSelect = moduleId => {
+    const onReasonSelect = (moduleId) => {
       this.setState({ focusModule: moduleId });
     };
 

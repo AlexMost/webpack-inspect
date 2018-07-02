@@ -92,7 +92,7 @@ class IntegrationAutosuggest extends React.Component {
     this.input.focus();
   }
 
-  storeInputReference = autosuggest => {
+  storeInputReference = (autosuggest) => {
     if (autosuggest !== null) {
       this.input = autosuggest.input;
     }

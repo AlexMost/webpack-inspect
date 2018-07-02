@@ -12,11 +12,11 @@ class UrlModal extends React.Component {
     this.state = { url: "" };
   }
 
-  handleUrlChange = ev => {
+  handleUrlChange = (ev) => {
     this.setState({ url: ev.target.value });
   };
 
-  handleKeyPress = ev => {
+  handleKeyPress = (ev) => {
     const { onUrl } = this.props;
     const { url } = this.state;
     if (ev.key === "Enter") {
@@ -43,7 +43,7 @@ class UrlModal extends React.Component {
         <div className={classes.modal}>
           <TextField
             className={classes.modalInput}
-            inputRef={input => input && input.focus()}
+            inputRef={(input) => input && input.focus()}
             placeholder="URL for stats.json"
             value={url}
             onChange={this.handleUrlChange}

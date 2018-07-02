@@ -12,10 +12,51 @@ import ModulesGraph from "../../components/ModulesGraph/index";
 import ModuleSearch from "../../components/ModuleSearch";
 import Sidebar from "../../components/Sidebar/index";
 import DrawingProgress from "../../components/DrawingProgress";
+import ModulesStats from "../../components/ModulesStats";
 import styles from "./styles";
 
-const InspectorComponent = props => {
-  const { classes, open, modules } = props;
+const ModulesGraphWrapper = ({ classes, open }) => (
+  <React.Fragment>
+    <main
+      className={classNames(classes.content, classes["content-right"], {
+        [classes.contentShift]: open,
+        [classes[`contentShift-right`]]: open,
+      })}
+    >
+      <div className={classes.drawerHeader} />
+      <ModulesGraph />
+    </main>
+    <Drawer
+      variant="persistent"
+      anchor="right"
+      open={open}
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+    >
+      <Sidebar />
+    </Drawer>
+  </React.Fragment>
+);
+
+ModulesGraphWrapper.propTypes = {
+  classes: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
+};
+
+const ModulesStatsWrapper = ({ classes }) => (
+  <main>
+    <div className={classes.drawerHeader} />
+    <ModulesStats />
+  </main>
+);
+
+ModulesStatsWrapper.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+const InspectorComponent = (props) => {
+  const { classes, open, modules, showStats } = props;
   const hasModules = Boolean(modules.length);
   return (
     <div className={classes.root}>
@@ -32,25 +73,11 @@ const InspectorComponent = props => {
           </Toolbar>
           <DrawingProgress />
         </AppBar>
-        <main
-          className={classNames(classes.content, classes["content-right"], {
-            [classes.contentShift]: open,
-            [classes[`contentShift-right`]]: open,
-          })}
-        >
-          <div className={classes.drawerHeader} />
-          <ModulesGraph />
-        </main>
-        <Drawer
-          variant="persistent"
-          anchor="right"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <Sidebar />
-        </Drawer>
+        {showStats ? (
+          <ModulesStatsWrapper classes={classes} />
+        ) : (
+          <ModulesGraphWrapper open={open} classes={classes} />
+        )}
       </div>
     </div>
   );
@@ -59,12 +86,14 @@ const InspectorComponent = props => {
 InspectorComponent.defaultProps = {
   modules: [],
   open: false,
+  showStats: false,
 };
 
 InspectorComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   modules: PropTypes.arrayOf(PropTypes.object),
   open: PropTypes.bool,
+  showStats: PropTypes.bool,
 };
 
 export default withStyles(styles, { withTheme: true })(InspectorComponent);

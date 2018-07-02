@@ -6,9 +6,9 @@ import { addQuery } from "../../lib/router-utils";
 
 export default withRouter(({ location, history }) => (
   <StoreContext.Consumer>
-    {ctx => (
+    {(ctx) => (
       <UploadComponent
-        onStatsUploaded={data => {
+        onStatsUploaded={(data) => {
           ctx.onStatsDataLoaded(data);
           const historyObj = {
             pathname: "/inspect",
@@ -16,7 +16,7 @@ export default withRouter(({ location, history }) => (
           };
           history.push(historyObj);
         }}
-        onUrl={url => {
+        onUrl={(url) => {
           const historyObj = {
             pathname: "/inspect",
             search: addQuery(location.search, "stats", url),

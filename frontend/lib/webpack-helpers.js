@@ -18,7 +18,7 @@ export function isWebpackBuiltin(path) {
 
 export function getModulesMap(modules) {
   const modulesMap = {};
-  modules.forEach(mod => {
+  modules.forEach((mod) => {
     modulesMap[mod.id] = mod;
   });
   return modulesMap;
@@ -26,7 +26,7 @@ export function getModulesMap(modules) {
 
 export function getModulesPrefixes(modules, clusterMap) {
   const prefixSet = new Set();
-  modules.forEach(module => {
+  modules.forEach((module) => {
     if (isWebpackBuiltin(module.name)) return;
     if (isNPMPackage(module.name)) {
       const [_, prefix] = module.name.match(NPM_PREFIX);
@@ -45,7 +45,7 @@ export function getModulesPrefixes(modules, clusterMap) {
 
 function maxStr(strs) {
   let result = "";
-  strs.forEach(str => {
+  strs.forEach((str) => {
     if (result.length < str.length) {
       result = str;
     }
@@ -54,7 +54,7 @@ function maxStr(strs) {
 }
 
 export function getShortLabel(name, prefixes) {
-  const matchPrefixes = prefixes.filter(p => name.startsWith(p));
+  const matchPrefixes = prefixes.filter((p) => name.startsWith(p));
   if (!matchPrefixes) return name;
   const prefix = maxStr(matchPrefixes);
   return name.replace(new RegExp(`^${prefix}`), "");
