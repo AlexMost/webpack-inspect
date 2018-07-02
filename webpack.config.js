@@ -71,6 +71,11 @@ module.exports = () => {
         template: "./template.html",
         title: "Webpack inspect",
       }),
+      new HtmlWebpackPlugin({
+        template: "./template.html",
+        title: "Webpack inspect",
+        filename: "inspect/index.html",
+      }),
       new webpack.DefinePlugin({
         BASENAME: JSON.stringify(BASENAME),
         PUBLIC_PATH: JSON.stringify(PUBLIC_PATH),
