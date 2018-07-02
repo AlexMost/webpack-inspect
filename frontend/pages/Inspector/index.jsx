@@ -20,6 +20,7 @@ const InspectorPage = withRouter((props) => {
             <InspectorComponent
               open={ctx.moduleId !== null}
               modules={ctx.modules}
+              showStats={ctx.moduleId === null}
               {...props}
             />
           </React.Fragment>

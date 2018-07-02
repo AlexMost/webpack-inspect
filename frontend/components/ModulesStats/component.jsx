@@ -4,15 +4,20 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
 import styles from "./styles";
 
-const ModuleCard = withStyles(styles)(({ label, classes }) => (
-  <Card className={classes.moduleInfo}>
-    <CardContent>
-      <Typography>{label}</Typography>
-    </CardContent>
-  </Card>
-));
+const POPULAR_LIMIT = 40;
+
+const ModuleCard = withStyles(styles)(
+  ({ id, label, path, classes, onClick }) => (
+    <Card className={classes.moduleInfo} onClick={() => onClick(id)}>
+      <CardContent>
+        <CardHeader title={label} subheader={path} />
+      </CardContent>
+    </Card>
+  ),
+);
 
 ModuleCard.propTypes = {
   label: PropTypes.string.isRequired,
@@ -20,19 +25,25 @@ ModuleCard.propTypes = {
 };
 
 const Modules = (props) => {
-  const { modules, classes } = props;
+  const { modules, classes, onModuleClick } = props;
   const sortedModules = modules
     .sort((m1, m2) => m2.reasons.length - m1.reasons.length)
-    .slice(0, 30);
+    .slice(0, POPULAR_LIMIT);
   return (
     <div className={classes.statsRoot}>
       <Typography variant="headline">
         {modules.length} modules loaded
       </Typography>
-      <Typography>Most popular:</Typography>
+      <Typography>Most popular {POPULAR_LIMIT}:</Typography>
       <div className={classes.statsList}>
-        {sortedModules.map(({ id, label }) => (
-          <ModuleCard key={id} label={label} />
+        {sortedModules.map(({ id, label, name }) => (
+          <ModuleCard
+            key={id}
+            id={id}
+            label={label}
+            path={name}
+            onClick={onModuleClick}
+          />
         ))}
       </div>
     </div>
@@ -46,6 +57,7 @@ Modules.defaultProps = {
 Modules.propTypes = {
   modules: PropTypes.arrayOf(PropTypes.object),
   classes: PropTypes.object.isRequired,
+  onModuleClick: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Modules);

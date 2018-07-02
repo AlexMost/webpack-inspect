@@ -4,7 +4,11 @@ import Modules from "./component";
 
 const ModulesStats = () => (
   <StoreContext.Consumer>
-    {({ modules }) => (modules.length ? <Modules modules={modules} /> : null)}
+    {({ modules, onModuleChange }) =>
+      modules.length ? (
+        <Modules modules={modules} onModuleClick={onModuleChange} />
+      ) : null
+    }
   </StoreContext.Consumer>
 );
 
