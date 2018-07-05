@@ -16,10 +16,17 @@ function formatTitle(name, size) {
   return `${name}<br />${truncated} ${units} (${size} bytes)`;
 }
 
+function formatLabel(label) {
+  if (label.length > 4) {
+    return "";
+  }
+  return label;
+}
+
 function createNode(mod, level) {
   return {
     id: mod.id,
-    label: mod.id.toString(),
+    label: formatLabel(mod.id.toString()),
     title: formatTitle(mod.name, mod.size),
     color: "gray",
     level,
