@@ -29,7 +29,9 @@ export function getModulesPrefixes(modules, clusterMap) {
   modules.forEach((module) => {
     if (isWebpackBuiltin(module.name)) return;
     if (isNPMPackage(module.name)) {
-      const [_, prefix] = module.name.match(NPM_PREFIX);
+      const match = module.name.match(NPM_PREFIX);
+      if (!match) return;
+      const [_, prefix] = match;
       prefixSet.add(prefix);
     } else {
       const cluster = clusterMap[module.id];
