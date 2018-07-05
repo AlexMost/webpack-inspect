@@ -2,28 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StoreContext from "./index";
-import { getClusterMap } from "../lib/clusterize";
-import {
-  getModulesPrefixes,
-  getShortLabel,
-  isWebpackBuiltin,
-} from "../lib/webpack-helpers";
-
-function makeModules(statsData) {
-  const clusterMap = getClusterMap(statsData.modules);
-  const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
-
-  // TODO: implement module short name
-  return statsData.modules
-    .filter((module) => !isWebpackBuiltin(module.name))
-    .map((module) => ({
-      id: module.id,
-      name: module.name,
-      reasons: module.reasons,
-      label: getShortLabel(module.name, prefixes),
-      size: module.size,
-    }));
-}
+import makeModules from "../lib/modules";
 
 export default class StoreComponent extends React.Component {
   constructor(props) {

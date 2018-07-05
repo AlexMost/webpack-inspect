@@ -114,8 +114,7 @@ export function getModulesClusters(modules) {
   return clusters;
 }
 
-export function getClusterMap(modules) {
-  const clusters = getModulesClusters(modules);
+export function getClusterMap(clusters) {
   const map = {};
   clusters.forEach((cluster) => {
     cluster.getModulesIds().forEach((modId) => {

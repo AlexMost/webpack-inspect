@@ -31,9 +31,7 @@ const Modules = (props) => {
     .slice(0, POPULAR_LIMIT);
   return (
     <div className={classes.statsRoot}>
-      <Typography variant="headline">
-        {modules.length} modules loaded
-      </Typography>
+      <Typography variant="headline">{modules.length} files loaded</Typography>
       <Typography>Most popular {POPULAR_LIMIT}:</Typography>
       <div className={classes.statsList}>
         {sortedModules.map(({ id, label, name }) => (
