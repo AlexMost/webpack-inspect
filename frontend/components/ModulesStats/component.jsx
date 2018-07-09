@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
+import { isSimpleModule } from "../../lib/modules";
 import styles from "./styles";
 
 const POPULAR_LIMIT = 40;
@@ -24,6 +25,14 @@ ModuleCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+function getSimpleModulesCount(modules) {
+  let count = 0;
+  for (let i = 0; i < modules.length; i++) {
+    if (isSimpleModule(modules[i])) count++;
+  }
+  return count;
+}
+
 const Modules = (props) => {
   const { modules, classes, onModuleClick } = props;
   const sortedModules = modules
@@ -31,7 +40,9 @@ const Modules = (props) => {
     .slice(0, POPULAR_LIMIT);
   return (
     <div className={classes.statsRoot}>
-      <Typography variant="headline">{modules.length} files loaded</Typography>
+      <Typography variant="headline">
+        {getSimpleModulesCount(modules)} files loaded
+      </Typography>
       <Typography>Most popular {POPULAR_LIMIT}:</Typography>
       <div className={classes.statsList}>
         {sortedModules.map(({ id, label, name }) => (

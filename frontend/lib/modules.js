@@ -15,16 +15,33 @@ class Module {
   }
 }
 
+class SimpleModule extends Module {}
+
+class ClusterModule extends Module {
+  constructor(data) {
+    super(data);
+    this.moduleIds = data.moduleIds;
+  }
+}
+
+export function isClusterModule(mod) {
+  return mod instanceof ClusterModule;
+}
+
+export function isSimpleModule(mod) {
+  return mod instanceof SimpleModule;
+}
+
 export default function makeModules(statsData) {
   const clusters = getModulesClusters(statsData.modules);
   const clusterMap = getClusterMap(clusters);
   const prefixes = getModulesPrefixes(statsData.modules, clusterMap);
 
-  return statsData.modules
+  const modules = statsData.modules
     .filter((module) => !isWebpackBuiltin(module.name))
     .map(
       (module) =>
-        new Module({
+        new SimpleModule({
           id: module.id,
           name: module.name,
           reasons: module.reasons,
@@ -32,4 +49,32 @@ export default function makeModules(statsData) {
           size: module.size,
         }),
     );
+  const modsMap = {};
+  modules.forEach((mod) => {
+    modsMap[mod.id] = mod;
+  });
+  const clusterModules = clusters.map(({ id: clusterId, modIds }) => {
+    const id = clusterId;
+    const name = clusterId;
+    let reasons = [];
+    let size = 0;
+    const moduleIds = new Set();
+    const label = getShortLabel(clusterId, prefixes);
+    modIds.forEach((modId) => {
+      moduleIds.add(modId);
+      const module = modsMap[modId];
+      reasons = reasons.concat(module.reasons);
+      size += module.size;
+    });
+    reasons = reasons.filter(({ moduleId }) => !modIds.has(moduleId));
+    return new ClusterModule({
+      id,
+      name,
+      reasons,
+      label,
+      size,
+      moduleIds,
+    });
+  });
+  return clusterModules.concat(modules);
 }
