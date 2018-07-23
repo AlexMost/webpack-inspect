@@ -8,6 +8,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
 import { GithubLink } from "../../components/Github";
+import BackButton from "../../components/BackBtn";
 import ModulesGraph from "../../components/ModulesGraph/index";
 import ModuleSearch from "../../components/ModuleSearch";
 import Sidebar from "../../components/Sidebar/index";
@@ -68,6 +69,7 @@ const InspectorComponent = (props) => {
           })}
         >
           <Toolbar className={classes.toolbar}>
+            <BackButton />
             {hasModules ? <ModuleSearch /> : null}
             <GithubLink />
           </Toolbar>
