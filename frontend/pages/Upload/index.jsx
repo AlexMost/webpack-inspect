@@ -11,14 +11,14 @@ export default withRouter(({ location, history }) => (
         onStatsUploaded={(data) => {
           ctx.onStatsDataLoaded(data);
           const historyObj = {
-            pathname: "/inspect",
+            pathname: "/stats",
             search: location.search,
           };
           history.push(historyObj);
         }}
         onUrl={(url) => {
           const historyObj = {
-            pathname: "/inspect",
+            pathname: "/stats",
             search: addQuery(location.search, "stats", url),
           };
           history.push(historyObj);
