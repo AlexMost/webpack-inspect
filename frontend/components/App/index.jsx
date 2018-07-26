@@ -1,7 +1,7 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import StoreComponent from "../../Store/StoreComponent";
+import { StoreComponent } from "./store";
 
 // pages
 import Inspector from "../../pages/Inspector/async";

@@ -1,29 +1,22 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import UploadComponent from "./component";
-import StoreContext from "../../Store";
-import { addQuery } from "../../lib/router-utils";
+import StoreContext from "../../components/App/store";
+import { makeGoToUrl } from "../../lib/router-utils";
 
-export default withRouter(({ location, history }) => (
-  <StoreContext.Consumer>
-    {(ctx) => (
-      <UploadComponent
-        onStatsUploaded={(data) => {
-          ctx.onStatsDataLoaded(data);
-          const historyObj = {
-            pathname: "/stats",
-            search: location.search,
-          };
-          history.push(historyObj);
-        }}
-        onUrl={(url) => {
-          const historyObj = {
-            pathname: "/stats",
-            search: addQuery(location.search, "stats", url),
-          };
-          history.push(historyObj);
-        }}
-      />
-    )}
-  </StoreContext.Consumer>
-));
+export default withRouter(({ location, history }) => {
+  const goTo = makeGoToUrl(history, location);
+  return (
+    <StoreContext.Consumer>
+      {(ctx) => (
+        <UploadComponent
+          onStatsUploaded={(data) => {
+            ctx.onStatsDataLoaded(data);
+            goTo("/stats");
+          }}
+          onUrl={(url) => goTo("/stats", { stats: url })}
+        />
+      )}
+    </StoreContext.Consumer>
+  );
+});
