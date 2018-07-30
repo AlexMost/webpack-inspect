@@ -1,6 +1,6 @@
 import React from "react";
 import { asyncComponent } from "react-async-component";
-import StoreContext from "../../Store";
+import StoreContext from "../App/store";
 
 const AsyncModulesGraphComponent = asyncComponent({
   resolve: () =>

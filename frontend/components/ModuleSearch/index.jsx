@@ -1,5 +1,5 @@
 import React from "react";
-import StoreContext from "../App/store";
+import PropTypes from "prop-types";
 import IntegrationAutosuggest from "./component";
 
 function makeSuggestions(modules) {
@@ -10,16 +10,19 @@ function makeSuggestions(modules) {
   }));
 }
 
-const ModuleSearchWrapper = (props) => (
-  <StoreContext.Consumer>
-    {({ modules, onModuleChange }) => (
-      <IntegrationAutosuggest
-        {...props}
-        modules={makeSuggestions(modules)}
-        onSuggestionSelected={onModuleChange}
-      />
-    )}
-  </StoreContext.Consumer>
-);
+const ModuleSearchWrapper = ({ modules, onModuleSelected }) => {
+  if (!modules.length) return null;
+  return (
+    <IntegrationAutosuggest
+      modules={makeSuggestions(modules)}
+      onSuggestionSelected={onModuleSelected}
+    />
+  );
+};
+
+ModuleSearchWrapper.propTypes = {
+  modules: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onModuleSelected: PropTypes.func.isRequired,
+};
 
 export default ModuleSearchWrapper;

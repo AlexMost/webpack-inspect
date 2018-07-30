@@ -1,6 +1,6 @@
 import React from "react";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import StoreContext from "../Store";
+import StoreContext from "./App/store";
 
 const DrawingProgress = () => (
   <StoreContext.Consumer>

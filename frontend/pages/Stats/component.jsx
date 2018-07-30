@@ -1,14 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { getQueryParam } from "../../lib/router-utils";
 import { GithubLink } from "../../components/Github";
 import ModuleSearch from "../../components/ModuleSearch";
-import DrawingProgress from "../../components/DrawingProgress";
 import ModulesStats from "../../components/ModulesStats";
 import styles from "./styles";
 
@@ -19,8 +16,7 @@ class StatsComponent extends React.Component {
   }
 
   componentDidMount() {
-    const { location } = this.props;
-    const statsUrl = getQueryParam(location.search, "stats");
+    const { statsUrl } = this.props;
     if (!statsUrl) return;
     this.loadStats(statsUrl);
   }
@@ -35,21 +31,27 @@ class StatsComponent extends React.Component {
   };
 
   render() {
-    const { classes, modules } = this.props;
+    const { classes, modules, onModuleSelected } = this.props;
     const { isUploading } = this.state;
-    const hasModules = Boolean(modules.length);
+    const progress = isUploading ? (
+      <LinearProgress style={{ width: "100%" }} />
+    ) : null;
 
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar className={classes.toolbar}>
-            {hasModules ? <ModuleSearch /> : null}
+            <ModuleSearch
+              modules={modules}
+              onModuleSelected={onModuleSelected}
+            />
             <GithubLink />
           </Toolbar>
-          {isUploading ? <LinearProgress style={{ width: "100%" }} /> : null}
-          <DrawingProgress />
+          {progress}
         </AppBar>
-        <main>{hasModules ? <ModulesStats /> : null}</main>
+        <main>
+          <ModulesStats modules={modules} onModuleClick={onModuleSelected} />
+        </main>
       </div>
     );
   }
@@ -57,14 +59,14 @@ class StatsComponent extends React.Component {
 
 StatsComponent.defaultProps = {
   modules: [],
+  statsUrl: "",
 };
 
 StatsComponent.propTypes = {
   classes: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   modules: PropTypes.arrayOf(PropTypes.object),
+  onModuleSelected: PropTypes.func.isRequired,
+  statsUrl: PropTypes.string,
 };
 
-export default withStyles(styles, { withTheme: true })(
-  withRouter(StatsComponent),
-);
+export default withStyles(styles, { withTheme: true })(StatsComponent);

@@ -2,7 +2,7 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import ArrowBack from "@material-ui/icons/ArrowBack";
-import StoreContext from "../Store";
+import StoreContext from "./App/store";
 
 const BackButton = () => (
   <StoreContext.Consumer>

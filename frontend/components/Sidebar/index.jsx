@@ -1,5 +1,5 @@
 import React from "react";
-import StoreContext from "../../Store";
+import StoreContext from "../App/store";
 import SidebarComponent from "./component";
 
 const Sidebar = () => (

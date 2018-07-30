@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter, Redirect } from "react-router-dom";
-import StoreContext from "../../Store";
+import StoreContext from "../../components/App/store";
 import InspectorComponent from "./component";
 import { getQueryParam } from "../../lib/router-utils";
 import LoaderComponent from "../../components/UploadFromUrl/LoaderComponent";
