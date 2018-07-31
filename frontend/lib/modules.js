@@ -32,6 +32,15 @@ export function isSimpleModule(mod) {
   return mod instanceof SimpleModule;
 }
 
+function processReasons(reasons) {
+  return reasons.map((r) => {
+    // converting all module ids to strings
+    // (because will use them in routing)
+    r.moduleId = r.moduleId.toString(); // eslint-disable-line
+    return r;
+  });
+}
+
 export default function makeModules(statsData) {
   const clusters = getModulesClusters(statsData.modules);
   const clusterMap = getClusterMap(clusters);
@@ -42,9 +51,9 @@ export default function makeModules(statsData) {
     .map(
       (module) =>
         new SimpleModule({
-          id: module.id,
+          id: module.id.toString(),
           name: module.name,
-          reasons: module.reasons,
+          reasons: processReasons(module.reasons),
           label: getShortLabel(module.name, prefixes),
           size: module.size,
         }),

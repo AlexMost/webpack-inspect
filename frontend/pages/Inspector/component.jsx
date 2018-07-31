@@ -13,89 +13,83 @@ import ModulesGraph from "../../components/ModulesGraph/index";
 import ModuleSearch from "../../components/ModuleSearch";
 import Sidebar from "../../components/Sidebar/index";
 import DrawingProgress from "../../components/DrawingProgress";
-import ModulesStats from "../../components/ModulesStats";
 import styles from "./styles";
 
-const ModulesGraphWrapper = ({ classes, open }) => (
-  <React.Fragment>
-    <main
-      className={classNames(classes.content, classes["content-right"], {
-        [classes.contentShift]: open,
-        [classes[`contentShift-right`]]: open,
-      })}
-    >
-      <div className={classes.drawerHeader} />
-      <ModulesGraph />
-    </main>
-    <Drawer
-      variant="persistent"
-      anchor="right"
-      open={open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <Sidebar />
-    </Drawer>
-  </React.Fragment>
-);
+class InspectorComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedModuleId: null,
+    };
+  }
 
-ModulesGraphWrapper.propTypes = {
-  classes: PropTypes.object.isRequired,
-  open: PropTypes.bool.isRequired,
-};
+  onGraphModuleSelect = (selectedNode) => {
+    console.log(selectedNode);
+  };
 
-const ModulesStatsWrapper = ({ classes }) => (
-  <main>
-    <div className={classes.drawerHeader} />
-    <ModulesStats />
-  </main>
-);
-
-ModulesStatsWrapper.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-const InspectorComponent = (props) => {
-  const { classes, open, modules, showStats } = props;
-  const hasModules = Boolean(modules.length);
-  return (
-    <div className={classes.root}>
-      <div className={classes.appFrame}>
-        <AppBar
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: open,
-            [classes["appBarShift-right"]]: open,
-          })}
-        >
-          <Toolbar className={classes.toolbar}>
-            <BackButton />
-            {hasModules ? <ModuleSearch /> : null}
-            <GithubLink />
-          </Toolbar>
-          <DrawingProgress />
-        </AppBar>
-        {showStats ? (
-          <ModulesStatsWrapper classes={classes} />
-        ) : (
-          <ModulesGraphWrapper open={open} classes={classes} />
-        )}
+  render() {
+    const { classes, modules, onModuleSelected, moduleId } = this.props;
+    const { selectedModuleId } = this.state;
+    return (
+      <div className={classes.root}>
+        <div className={classes.appFrame}>
+          <AppBar
+            className={classNames(classes.appBar, {
+              [classes.appBarShift]: true,
+              [classes["appBarShift-right"]]: true,
+            })}
+          >
+            <Toolbar className={classes.toolbar}>
+              <BackButton />
+              <ModuleSearch
+                modules={modules}
+                onModuleSelected={onModuleSelected}
+              />
+              <GithubLink />
+            </Toolbar>
+            <DrawingProgress />
+          </AppBar>
+          <main
+            className={classNames(classes.content, classes["content-right"], {
+              [classes.contentShift]: true,
+              [classes[`contentShift-right`]]: true,
+            })}
+          >
+            <div className={classes.drawerHeader} />
+            <ModulesGraph
+              moduleId={moduleId}
+              modules={modules}
+              onNodeClick={this.onGraphModuleSelect}
+            />
+          </main>
+          <Drawer
+            variant="persistent"
+            anchor="right"
+            open
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <Sidebar
+              modules={modules}
+              selectedModuleId={selectedModuleId || moduleId}
+            />
+          </Drawer>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 InspectorComponent.defaultProps = {
   modules: [],
-  open: false,
-  showStats: false,
 };
 
 InspectorComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   modules: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool,
-  showStats: PropTypes.bool,
+  moduleId: PropTypes.string.isRequired,
+  onModuleSelected: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(InspectorComponent);

@@ -29,12 +29,28 @@ export default class ModulesGraphComponent extends React.Component {
   }
 
   renderGraph = () => {
+    const {
+      modules,
+      moduleId,
+      onNodeClick,
+      onDrawEnd,
+      onDrawStart,
+    } = this.props;
     const container = this.container.current;
     const rect = container.getBoundingClientRect();
-    this.network = renderGraph(this.props, {
-      width: rect.width,
-      height: rect.height,
-    });
+    this.network = renderGraph(
+      {
+        modules,
+        moduleId,
+        onNodeClick,
+        onDrawEnd,
+        onDrawStart,
+      },
+      {
+        width: rect.width,
+        height: rect.height,
+      },
+    );
   };
 
   render() {
@@ -48,6 +64,16 @@ export default class ModulesGraphComponent extends React.Component {
   }
 }
 
+ModulesGraphComponent.defaultProps = {
+  onNodeClick: () => {},
+  onDrawStart: () => {},
+  onDrawEnd: () => {},
+};
+
 ModulesGraphComponent.propTypes = {
-  moduleId: PropTypes.number.isRequired,
+  moduleId: PropTypes.string.isRequired,
+  modules: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onNodeClick: PropTypes.func,
+  onDrawStart: PropTypes.func,
+  onDrawEnd: PropTypes.func,
 };
