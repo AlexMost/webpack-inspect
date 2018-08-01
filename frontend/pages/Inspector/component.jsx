@@ -15,7 +15,7 @@ import Sidebar from "../../components/Sidebar/index";
 import DrawingProgress from "../../components/DrawingProgress";
 import styles from "./styles";
 
-class InspectorComponent extends React.Component {
+class InspectorComponent extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,12 +24,13 @@ class InspectorComponent extends React.Component {
   }
 
   onGraphModuleSelect = (selectedNode) => {
-    console.log(selectedNode);
+    this.setState({ selectedModuleId: selectedNode.node });
   };
 
   render() {
     const { classes, modules, onModuleSelected, moduleId } = this.props;
     const { selectedModuleId } = this.state;
+    const currentModule = modules.find(({ id }) => id === moduleId);
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
@@ -44,6 +45,7 @@ class InspectorComponent extends React.Component {
               <ModuleSearch
                 modules={modules}
                 onModuleSelected={onModuleSelected}
+                inputValue={currentModule.name}
               />
               <GithubLink />
             </Toolbar>

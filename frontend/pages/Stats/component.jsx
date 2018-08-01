@@ -16,18 +16,21 @@ class StatsComponent extends React.Component {
   }
 
   componentDidMount() {
-    const { statsUrl } = this.props;
-    if (!statsUrl) return;
+    const { statsUrl, modules } = this.props;
+    if (modules.length || !statsUrl) return;
     this.loadStats(statsUrl);
   }
 
   loadStats = async (statsUrl) => {
-    const { onStatsDataLoaded } = this.props;
+    const { onStatsDataLoaded, moduleId, onModuleSelected } = this.props;
     this.setState({ isUploading: true });
     const resp = await fetch(statsUrl);
     const jsonData = await resp.json();
     this.setState({ isUploading: false });
     onStatsDataLoaded(jsonData);
+    if (moduleId) {
+      onModuleSelected(moduleId);
+    }
   };
 
   render() {
@@ -59,7 +62,8 @@ class StatsComponent extends React.Component {
 
 StatsComponent.defaultProps = {
   modules: [],
-  statsUrl: "",
+  statsUrl: null,
+  moduleId: null,
 };
 
 StatsComponent.propTypes = {
@@ -67,6 +71,7 @@ StatsComponent.propTypes = {
   modules: PropTypes.arrayOf(PropTypes.object),
   onModuleSelected: PropTypes.func.isRequired,
   statsUrl: PropTypes.string,
+  moduleId: PropTypes.string,
 };
 
 export default withStyles(styles, { withTheme: true })(StatsComponent);

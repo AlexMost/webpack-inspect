@@ -8,6 +8,7 @@ import StatsComponent from "./component";
 const Stats = (props) => {
   const { location, history } = props;
   const statsUrl = getQueryParam(location.search, "stats");
+  const moduleId = getQueryParam(location.search, "mid");
   const goToUrl = makeGoToUrl(history, location);
   const onModuleSelected = (modId) => goToUrl("/inspect", { mid: modId });
   return (
@@ -16,6 +17,7 @@ const Stats = (props) => {
         ctx.modules.length || statsUrl ? (
           <StatsComponent
             modules={ctx.modules}
+            moduleId={moduleId}
             onStatsDataLoaded={ctx.onStatsDataLoaded}
             statsUrl={statsUrl}
             onModuleSelected={onModuleSelected}
