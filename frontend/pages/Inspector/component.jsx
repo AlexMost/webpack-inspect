@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -34,12 +33,7 @@ class InspectorComponent extends React.PureComponent {
     return (
       <div className={classes.root}>
         <div className={classes.appFrame}>
-          <AppBar
-            className={classNames(classes.appBar, {
-              [classes.appBarShift]: true,
-              [classes["appBarShift-right"]]: true,
-            })}
-          >
+          <AppBar position="static">
             <Toolbar className={classes.toolbar}>
               <BackButton />
               <ModuleSearch
@@ -51,33 +45,27 @@ class InspectorComponent extends React.PureComponent {
             </Toolbar>
             <DrawingProgress />
           </AppBar>
-          <main
-            className={classNames(classes.content, classes["content-right"], {
-              [classes.contentShift]: true,
-              [classes[`contentShift-right`]]: true,
-            })}
-          >
-            <div className={classes.drawerHeader} />
+          <main className={classes.container}>
             <ModulesGraph
               moduleId={moduleId}
               modules={modules}
               onNodeClick={this.onGraphModuleSelect}
             />
           </main>
-          <Drawer
-            variant="persistent"
-            anchor="right"
-            open
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-          >
-            <Sidebar
-              modules={modules}
-              selectedModuleId={selectedModuleId || moduleId}
-            />
-          </Drawer>
         </div>
+        <Drawer
+          variant="persistent"
+          anchor="right"
+          open
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <Sidebar
+            modules={modules}
+            selectedModuleId={selectedModuleId || moduleId}
+          />
+        </Drawer>
       </div>
     );
   }

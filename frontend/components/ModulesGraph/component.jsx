@@ -4,7 +4,7 @@ import renderGraph from "./visGraph";
 
 function createMarkup() {
   return {
-    __html: '<div id="graph-container" style="height:100%;flex-grow: 1"></div>',
+    __html: '<div id="graph-container" style="height:100%;"></div>',
   };
 }
 
