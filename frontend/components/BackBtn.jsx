@@ -1,24 +1,25 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { Link, withRouter } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import ArrowBack from "@material-ui/icons/ArrowBack";
-import StoreContext from "../Store";
+import { removeQuery } from "../lib/router-utils";
 
-const BackButton = () => (
-  <StoreContext.Consumer>
-    {(ctx) =>
-      ctx.modules.length && ctx.moduleId ? (
-        <Tooltip title="Upload file from the computer">
-          <IconButton
-            onClick={() => ctx.onModuleChange(null)}
-            style={{ marginRight: "10px" }}
-          >
-            <ArrowBack style={{ color: "white" }} />
-          </IconButton>
-        </Tooltip>
-      ) : null
-    }
-  </StoreContext.Consumer>
+const BackButton = ({ location }) => (
+  <Tooltip title="Back to stats">
+    <Link
+      to={{ pathname: "/stats", search: removeQuery(location.search, "mid") }}
+    >
+      <IconButton style={{ marginRight: "10px" }}>
+        <ArrowBack style={{ color: "white" }} />
+      </IconButton>
+    </Link>
+  </Tooltip>
 );
 
-export default BackButton;
+BackButton.propTypes = {
+  location: PropTypes.object.isRequired,
+};
+
+export default withRouter(BackButton);

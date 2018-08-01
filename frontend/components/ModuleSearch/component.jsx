@@ -83,14 +83,17 @@ function getSuggestions(value, modules) {
 }
 
 class IntegrationAutosuggest extends React.Component {
-  state = {
-    value: "",
-    suggestions: [],
-  };
-
-  componentDidMount() {
-    this.input.focus();
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.inputValue,
+      suggestions: [],
+    };
   }
+
+  // componentDidMount() {
+  //   this.input.focus();
+  // }
 
   storeInputReference = (autosuggest) => {
     if (autosuggest !== null) {
@@ -143,6 +146,7 @@ class IntegrationAutosuggest extends React.Component {
         renderSuggestion={renderSuggestion}
         ref={this.storeInputReference}
         inputProps={{
+          autoFocus: true,
           classes,
           placeholder: "Search and select module for the inspection",
           value,
@@ -153,10 +157,15 @@ class IntegrationAutosuggest extends React.Component {
   }
 }
 
+IntegrationAutosuggest.defaultProps = {
+  inputValue: "",
+};
+
 IntegrationAutosuggest.propTypes = {
   classes: PropTypes.object.isRequired,
   onSuggestionSelected: PropTypes.func.isRequired,
   modules: PropTypes.arrayOf(PropTypes.object).isRequired,
+  inputValue: PropTypes.string,
 };
 
 export default withStyles(styles)(IntegrationAutosuggest);
