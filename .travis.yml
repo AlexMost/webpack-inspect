@@ -19,7 +19,7 @@ jobs:
     - stage: lint
       script: npm run ci-lint
     - stage: test
-      script: skip
+      script: npm run test
     - stage: deploy
       if: branch = master
       script: skip
