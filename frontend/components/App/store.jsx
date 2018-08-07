@@ -2,11 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import makeModules from "../../lib/modules";
-
-const StoreContext = React.createContext({
-  modules: [],
-  onStatsDataLoaded: () => {},
-});
+import StoreContext from "./storeContext";
 
 export class StoreComponent extends React.Component {
   constructor(props) {

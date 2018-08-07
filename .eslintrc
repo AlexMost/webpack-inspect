@@ -3,7 +3,8 @@
   "parser": "babel-eslint",
   "plugins": ["prettier"],
   "env": {
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "globals": {
     "BASENAME": true,
@@ -16,6 +17,7 @@
     "react/forbid-prop-types": 0,
     "no-console": 0,
     "no-unused-vars": ["error", { "varsIgnorePattern": "^_" }],
-    "react/jsx-one-expression-per-line": 0
+    "react/jsx-one-expression-per-line": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}]
   }
 }
