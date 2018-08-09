@@ -45,8 +45,8 @@ module.exports = () => {
           cache: true,
           parallel: true,
           uglifyOptions: {
-            compress: true,
-            ecma: 6,
+            compress: { inline: false },
+            ecma: 5,
             mangle: {
               safari10: true,
             },
