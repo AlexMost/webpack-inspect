@@ -36,7 +36,9 @@ function processReasons(reasons) {
   return reasons.map((r) => {
     // converting all module ids to strings
     // (because will use them in routing)
-    r.moduleId = r.moduleId.toString(); // eslint-disable-line
+    if (r.moduleId !== null) {
+      r.moduleId = r.moduleId.toString(); // eslint-disable-line
+    }
     return r;
   });
 }
