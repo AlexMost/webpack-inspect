@@ -9,9 +9,13 @@ import styles from "./styles";
 function readFile(file, cb) {
   const reader = new FileReader();
   reader.onload = () => {
-    const data = reader.result;
-    const jsonData = JSON.parse(data);
-    cb(jsonData);
+    try {
+      const data = reader.result;
+      const jsonData = JSON.parse(data);
+      cb(null, jsonData);
+    } catch (err) {
+      cb(err);
+    }
   };
 
   reader.readAsText(file);
@@ -19,11 +23,15 @@ function readFile(file, cb) {
 
 class UploadFromLocal extends React.Component {
   handleFileUpload = (ev) => {
-    const { onUploadStart, onUploadEnd } = this.props;
+    const { onUploadStart, onUploadEnd, onUploadErr } = this.props;
     onUploadStart();
     if (ev.target.files !== null) {
-      readFile(ev.target.files[0], (statsData) => {
-        onUploadEnd(statsData);
+      readFile(ev.target.files[0], (err, statsData) => {
+        if (err) {
+          onUploadErr(err);
+        } else {
+          onUploadEnd(statsData);
+        }
       });
     }
   };
@@ -60,11 +68,13 @@ class UploadFromLocal extends React.Component {
 UploadFromLocal.defaultProps = {
   onUploadStart: () => {},
   onUploadEnd: () => {},
+  onUploadErr: () => {},
 };
 
 UploadFromLocal.propTypes = {
   onUploadStart: PropTypes.func,
   onUploadEnd: PropTypes.func,
+  onUploadErr: PropTypes.func,
   classes: PropTypes.object.isRequired,
   disabled: PropTypes.bool.isRequired,
 };
