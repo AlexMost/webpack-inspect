@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import FileUpload from "@material-ui/icons/FileUpload";
+import FileUpload from "@material-ui/icons/ArrowUpward";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import styles from "./styles";
