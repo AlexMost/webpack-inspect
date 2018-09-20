@@ -146,7 +146,6 @@ class IntegrationAutosuggest extends React.Component {
         renderSuggestion={renderSuggestion}
         ref={this.storeInputReference}
         inputProps={{
-          autoFocus: true,
           classes,
           placeholder: "Search and select module for the inspection",
           value,
