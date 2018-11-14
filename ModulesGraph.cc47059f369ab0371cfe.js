@@ -1,4 +1,4 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{TycK:function(t,e,i){"use strict";
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{TycK:function(t,e,i){"use strict";
 /**
  * vis.js
  * https://github.com/almende/vis
