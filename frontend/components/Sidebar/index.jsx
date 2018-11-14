@@ -8,12 +8,17 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import styles from "./styles";
 
+function getReasons(module) {
+  return module.reasons.filter(({ moduleId }) => Boolean(moduleId));
+}
+
 const SidebarComponent = (props) => {
   const { modules, selectedModuleId, classes } = props;
   const { sidebarRoot, listItemCaption, reasonLabel } = classes;
 
   const module = modules.find((m) => m.id === selectedModuleId);
   if (!module) return null;
+  const reasons = getReasons(module);
   return (
     <div className={sidebarRoot}>
       <Typography align="center" gutterBottom noWrap variant="title">
@@ -21,11 +26,12 @@ const SidebarComponent = (props) => {
       </Typography>
       <List disablePadding>
         <ListSubheader disableSticky>
-          {module.reasons.length}
+          {`${reasons.length} `}
           Reasons:
         </ListSubheader>
-        {module.reasons.map((reason) => {
-          const { label, name } = modules.find((m) => m.id === reason.moduleId);
+        {reasons.map((reason) => {
+          const mod = modules.find((m) => m.id === reason.moduleId);
+          const { label, name } = mod;
           return (
             <ListItem key={reason.module + reason.loc} divider>
               <ListItemText>
