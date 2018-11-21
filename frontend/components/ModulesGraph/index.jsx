@@ -1,8 +1,13 @@
-import { asyncComponent } from "react-async-component";
+import React, { lazy, Suspense } from "react";
 
-const AsyncModulesGraphComponent = asyncComponent({
-  resolve: () =>
-    import(/* webpackPrefetch: true, webpackChunkName: "ModulesGraph" */ "./component"),
-});
+const ModulesGraph = lazy(() =>
+  import(/* webpackPrefetch: true, webpackChunkName: "ModulesGraph" */ "./component"),
+);
 
-export default AsyncModulesGraphComponent;
+export default function AsyncModulesGraphComponent(props) {
+  return (
+    <Suspense fallback={null}>
+      <ModulesGraph {...props} />
+    </Suspense>
+  );
+}
