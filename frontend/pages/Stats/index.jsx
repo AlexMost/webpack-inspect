@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Redirect, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import StoreContext from "../../components/App/store";
@@ -11,22 +11,17 @@ const Stats = (props) => {
   const moduleId = getQueryParam(location.search, "mid");
   const goToUrl = makeGoToUrl(history, location);
   const onModuleSelected = (modId) => goToUrl("/inspect", { mid: modId });
-  return (
-    <StoreContext.Consumer>
-      {(ctx) =>
-        ctx.modules.length || statsUrl ? (
-          <StatsComponent
-            modules={ctx.modules}
-            moduleId={moduleId}
-            onStatsDataLoaded={ctx.onStatsDataLoaded}
-            statsUrl={statsUrl}
-            onModuleSelected={onModuleSelected}
-          />
-        ) : (
-          <Redirect to="/" />
-        )
-      }
-    </StoreContext.Consumer>
+  const ctx = useContext(StoreContext);
+  return ctx.modules.length || statsUrl ? (
+    <StatsComponent
+      modules={ctx.modules}
+      moduleId={moduleId}
+      onStatsDataLoaded={ctx.onStatsDataLoaded}
+      statsUrl={statsUrl}
+      onModuleSelected={onModuleSelected}
+    />
+  ) : (
+    <Redirect to="/" />
   );
 };
 
