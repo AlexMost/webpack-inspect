@@ -11,7 +11,6 @@ import BackButton from "../../components/BackBtn";
 import ModulesGraph from "../../components/ModulesGraph/index";
 import ModuleSearch from "../../components/ModuleSearch";
 import Sidebar from "../../components/Sidebar/index";
-import DrawingProgress from "../../components/DrawingProgress";
 import styles from "./styles";
 
 class InspectorComponent extends React.PureComponent {
@@ -43,7 +42,6 @@ class InspectorComponent extends React.PureComponent {
               />
               <GithubLink />
             </Toolbar>
-            <DrawingProgress />
           </AppBar>
           <main className={classes.container}>
             <ModulesGraph
