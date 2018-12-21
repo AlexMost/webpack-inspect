@@ -5,14 +5,20 @@ import makeModules from "../../lib/modules";
 
 const StoreContext = React.createContext({
   modules: [],
+  clusterMap: {},
   onStatsDataLoaded: () => {},
 });
 
 export function StoreComponent({ children }) {
   const [modules, setModules] = useState([]);
-  const onStatsDataLoaded = (statsData) => setModules(makeModules(statsData));
+  const [clusterMap, setClusterMap] = useState([]);
+  const onStatsDataLoaded = (statsData) => {
+    const [mods, clstrMap] = makeModules(statsData);
+    setModules(mods);
+    setClusterMap(clstrMap);
+  };
   return (
-    <StoreContext.Provider value={{ modules, onStatsDataLoaded }}>
+    <StoreContext.Provider value={{ modules, onStatsDataLoaded, clusterMap }}>
       {children}
     </StoreContext.Provider>
   );

@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
+import Checkbox from "@material-ui/core/Checkbox";
 import styles from "./styles";
 
 function getReasons(module) {
@@ -13,12 +14,15 @@ function getReasons(module) {
 }
 
 const SidebarComponent = (props) => {
-  const { modules, selectedModuleId, classes } = props;
+  const { modules, selectedModuleId, classes, onGroupingToggle } = props;
   const { sidebarRoot, listItemCaption, reasonLabel } = classes;
-
+  const toggleChecked = (ev) => {
+    onGroupingToggle(ev.target.checked);
+  };
   const module = modules.find((m) => m.id === selectedModuleId);
   if (!module) return null;
   const reasons = getReasons(module);
+
   return (
     <div className={sidebarRoot}>
       <Typography align="center" gutterBottom noWrap variant="title">
@@ -28,6 +32,10 @@ const SidebarComponent = (props) => {
         <ListSubheader disableSticky>
           {`${reasons.length} `}
           Reasons:
+        </ListSubheader>
+        <ListSubheader disableSticky>
+          Group
+          <Checkbox color="primary" onChange={toggleChecked} />
         </ListSubheader>
         {reasons.map((reason) => {
           const mod = modules.find((m) => m.id === reason.moduleId);
@@ -54,6 +62,7 @@ SidebarComponent.propTypes = {
   modules: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedModuleId: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
+  onGroupingToggle: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SidebarComponent);

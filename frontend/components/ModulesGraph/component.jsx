@@ -20,8 +20,14 @@ export default class ModulesGraphComponent extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const { moduleId: currentModuleId } = this.props;
-    return nextProps.moduleId !== currentModuleId;
+    const {
+      moduleId: currentModuleId,
+      isGrouped: currentIsGrouped,
+    } = this.props;
+    return (
+      nextProps.moduleId !== currentModuleId ||
+      nextProps.isGrouped !== currentIsGrouped
+    );
   }
 
   componentDidUpdate() {
@@ -35,16 +41,20 @@ export default class ModulesGraphComponent extends React.Component {
       onNodeClick,
       onDrawEnd,
       onDrawStart,
+      isGrouped,
+      clusterMap,
     } = this.props;
     const container = this.container.current;
     const rect = container.getBoundingClientRect();
     this.network = renderGraph(
       {
         modules,
+        clusterMap,
         moduleId,
         onNodeClick,
         onDrawEnd,
         onDrawStart,
+        isGrouped,
       },
       {
         width: rect.width,
@@ -68,12 +78,15 @@ ModulesGraphComponent.defaultProps = {
   onNodeClick: () => {},
   onDrawStart: () => {},
   onDrawEnd: () => {},
+  isGrouped: false,
 };
 
 ModulesGraphComponent.propTypes = {
   moduleId: PropTypes.string.isRequired,
   modules: PropTypes.arrayOf(PropTypes.object).isRequired,
+  clusterMap: PropTypes.object.isRequired,
   onNodeClick: PropTypes.func,
   onDrawStart: PropTypes.func,
   onDrawEnd: PropTypes.func,
+  isGrouped: PropTypes.bool,
 };

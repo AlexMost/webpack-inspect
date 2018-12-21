@@ -87,5 +87,5 @@ export default function makeModules(statsData) {
       moduleIds,
     });
   });
-  return clusterModules.concat(modules);
+  return [clusterModules.concat(modules), clusterMap];
 }
