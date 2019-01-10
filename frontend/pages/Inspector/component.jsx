@@ -18,6 +18,7 @@ class InspectorComponent extends React.PureComponent {
     super(props);
     this.state = {
       selectedModuleId: null,
+      isGrouped: false,
     };
   }
 
@@ -26,8 +27,14 @@ class InspectorComponent extends React.PureComponent {
   };
 
   render() {
-    const { classes, modules, onModuleSelected, moduleId } = this.props;
-    const { selectedModuleId } = this.state;
+    const {
+      classes,
+      modules,
+      onModuleSelected,
+      moduleId,
+      clusterMap,
+    } = this.props;
+    const { selectedModuleId, isGrouped } = this.state;
     const currentModule = modules.find(({ id }) => id === moduleId);
     return (
       <div className={classes.root}>
@@ -45,8 +52,10 @@ class InspectorComponent extends React.PureComponent {
           </AppBar>
           <main className={classes.container}>
             <ModulesGraph
+              isGrouped={isGrouped}
               moduleId={moduleId}
               modules={modules}
+              clusterMap={clusterMap}
               onNodeClick={this.onGraphModuleSelect}
             />
           </main>
@@ -62,6 +71,9 @@ class InspectorComponent extends React.PureComponent {
           <Sidebar
             modules={modules}
             selectedModuleId={selectedModuleId || moduleId}
+            onGroupingToggle={(isGroupingEnabled) =>
+              this.setState({ isGrouped: isGroupingEnabled })
+            }
           />
         </Drawer>
       </div>
@@ -76,6 +88,7 @@ InspectorComponent.defaultProps = {
 InspectorComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   modules: PropTypes.arrayOf(PropTypes.object),
+  clusterMap: PropTypes.object.isRequired,
   moduleId: PropTypes.string.isRequired,
   onModuleSelected: PropTypes.func.isRequired,
 };

@@ -40,6 +40,7 @@ const InspectorPage = withRouter((props) => {
   return (
     <InspectorComponent
       modules={ctx.modules}
+      clusterMap={ctx.clusterMap}
       moduleId={moduleId}
       onModuleSelected={onModuleSelected}
     />
