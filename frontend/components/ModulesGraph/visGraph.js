@@ -62,7 +62,11 @@ function makeClusters(network, nodes, clusterMap) {
     if (cluster) {
       const clusterName = cluster.getId();
       if (!clusters[clusterName]) {
-        clusters[clusterName] = { ids: new Set(), level };
+        clusters[clusterName] = {
+          ids: new Set(),
+          level,
+          label: cluster.getName(),
+        };
       }
       clusters[clusterName].ids.add(id);
     }
